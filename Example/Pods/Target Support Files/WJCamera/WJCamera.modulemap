@@ -1,0 +1,6 @@
+framework module WJCamera {
+  umbrella header "WJCamera-umbrella.h"
+
+  export *
+  module * { export * }
+}

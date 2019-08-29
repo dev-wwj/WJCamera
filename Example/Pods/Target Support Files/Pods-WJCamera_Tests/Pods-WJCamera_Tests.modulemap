@@ -1,0 +1,6 @@
+framework module Pods_WJCamera_Tests {
+  umbrella header "Pods-WJCamera_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
