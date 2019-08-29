@@ -21,11 +21,11 @@ Pod::Spec.new do |s|
                         点击拍照，长按录像
                        DESC
 
-  s.homepage         = 'https://github.com/Scorpio-git/WJCamera.git'
+  s.homepage         = 'https://github.com/dev-wwj'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'scorpion' => '747833020@qq.com' }
-  s.source           = { :git => 'https://github.com/Scorpio-git/WJCamera.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/dev-wwj/WJCamera.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
