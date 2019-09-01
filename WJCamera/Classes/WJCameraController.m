@@ -15,6 +15,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <Photos/Photos.h>
 #import "HAVPlayer.h"
+#import "UIImage+WJLibrary.h"
 
 
 typedef void(^PropertyChangeBlock)(AVCaptureDevice *captureDevice);
@@ -102,7 +103,8 @@ API_AVAILABLE(ios(10.0))
     // 对焦
     self.focusCursor = [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 60,60)];
     [self.view addSubview:self.focusCursor];
-    self.focusCursor.image = [UIImage imageNamed:@"focusing"];
+   
+    self.focusCursor.image = [UIImage wj_bundleImageNamed:@"focusing"];
     [self onHiddenFocusCurSorAction];
     
     _captureCenter = CGPointMake(VIEW_W(self.view)/2, VIEW_H(self.view)-60);
@@ -114,7 +116,7 @@ API_AVAILABLE(ios(10.0))
     //切换摄像头
     _btnChangeCamera = [UIButton buttonWithType:UIButtonTypeCustom];
     _btnChangeCamera.frame = CGRectMake(VIEW_W(self.view) - 60, 20 , 46 , 46);
-    [_btnChangeCamera setImage:[UIImage imageNamed:@"btn_video_flip_camera"] forState:UIControlStateNormal];
+    [_btnChangeCamera setImage: [UIImage wj_bundleImageNamed:@"btn_video_flip_camera"] forState:UIControlStateNormal];
     [self.view addSubview: _btnChangeCamera];
     [_btnChangeCamera addTarget:self action:@selector(changeCamera:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -140,14 +142,14 @@ API_AVAILABLE(ios(10.0))
     
     //取消拍摄
     _btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_btnBack setImage:[UIImage imageNamed:@"wjc_back"] forState:UIControlStateNormal];
+    [_btnBack setImage:[UIImage wj_bundleImageNamed:@"wjc_back"] forState:UIControlStateNormal];
     _btnBack.frame = CGRectMake(0, 0, 46, 46);
     _btnBack.center = CGPointMake(_captureCenter.x/2, _captureCenter.y);
     [self.view addSubview:_btnBack];
     [_btnBack addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     
     _btnRephotography = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_btnRephotography setImage:[UIImage imageNamed:@"take_cancle"] forState:UIControlStateNormal];
+    [_btnRephotography setImage:[UIImage wj_bundleImageNamed:@"take_cancle"] forState:UIControlStateNormal];
     _btnRephotography.frame = CGRectMake(0, 0, 46, 46);
     _btnRephotography.center = _captureCenter;
     [self.view insertSubview:_btnRephotography  belowSubview:_captureView];
@@ -155,7 +157,7 @@ API_AVAILABLE(ios(10.0))
     _btnRephotography.hidden = TRUE;
     
     _btnConfirm = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_btnConfirm setImage:[UIImage imageNamed:@"take_confirm"] forState:UIControlStateNormal];
+    [_btnConfirm setImage:[UIImage wj_bundleImageNamed:@"take_confirm"] forState:UIControlStateNormal];
     _btnConfirm.frame = CGRectMake(0, 0, 46, 46);
     _btnConfirm.center = _captureCenter;
     [self.view insertSubview:_btnConfirm belowSubview:_captureView];

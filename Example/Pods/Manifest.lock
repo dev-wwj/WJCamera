@@ -35,7 +35,7 @@ SPEC CHECKSUMS:
   "Expecta+Snapshots": dcff217eef506dabd6dfdc7864ea2da321fafbb8
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
-  WJCamera: 51fcf4e2808d2b6dc1af08bfb12a92148101539a
+  WJCamera: a1f1e2bcf8dfa275d96429d0c477076dba6e0e30
 
 PODFILE CHECKSUM: 5769e3beaea0082923df2820ec28aa9be37a2e2e
 

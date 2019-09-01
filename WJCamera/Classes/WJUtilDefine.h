@@ -15,4 +15,5 @@
 
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 
+
 #endif /* WJUtilDefine_h */

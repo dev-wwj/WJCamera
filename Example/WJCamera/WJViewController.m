@@ -7,7 +7,9 @@
 //
 
 #import "WJViewController.h"
-@interface WJViewController ()
+#import "WJCameraController.h"
+
+@interface WJViewController ()<CameraDelegate>
 
 @end
 
@@ -24,5 +26,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)start:(id)sender {
+    WJCameraController *wjc =[[WJCameraController alloc] init];
+    [self presentViewController:wjc animated:YES completion:nil];
+    wjc.delegate = self;
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+  
+    
+}
+
+-(void)completeWithAsset:(PHAsset*)asset image:(UIImage *)image videoPath:(NSURL*)videoPath{
+    NSLog(@"asset---%@",asset);
+    NSLog(@"image---%@",image);
+    NSLog(@"videoPath---%@",videoPath);
+}
+
 
 @end

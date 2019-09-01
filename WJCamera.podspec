@@ -31,9 +31,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'WJCamera/Classes/**/*'
-  
   s.resource_bundles = {
-    'WJCamera' => ['WJCamera/Assets/*.png']
+    'WJCamera' => ['WJCamera/Resources/*.png']
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
