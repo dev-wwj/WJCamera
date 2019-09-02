@@ -7,7 +7,16 @@
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+#import "WJCameraController.h"
+
+//创建
+WJCameraController *wjc =[[WJCameraController alloc] init];
+wjc.delegate = self;
+[self presentViewController:wjc animated:YES completion:nil];
+
+//通过delegate，得到拍摄的照片或视频.
+-(void)completeWithAsset:(PHAsset*)asset image:(UIImage *)image videoPath:(NSURL*)videoPath{
+}
 
 ## Requirements
 
