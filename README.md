@@ -12,11 +12,15 @@ iOS相机
 
 #import "WJCameraController.h"
 
+
 //创建
 
 WJCameraController *wjc =[[WJCameraController alloc] init];
+
 wjc.delegate = self;
+
 [self presentViewController:wjc animated:YES completion:nil];
+
 
 //通过delegate，得到拍摄的照片或视频.
 
