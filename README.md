@@ -5,16 +5,21 @@
 [![License](https://img.shields.io/cocoapods/l/WJCamera.svg?style=flat)](https://cocoapods.org/pods/WJCamera)
 [![Platform](https://img.shields.io/cocoapods/p/WJCamera.svg?style=flat)](https://cocoapods.org/pods/WJCamera)
 
+iOS相机
+点击拍照，长按录像
+
 ## Example
 
 #import "WJCameraController.h"
 
 //创建
+
 WJCameraController *wjc =[[WJCameraController alloc] init];
 wjc.delegate = self;
 [self presentViewController:wjc animated:YES completion:nil];
 
 //通过delegate，得到拍摄的照片或视频.
+
 -(void)completeWithAsset:(PHAsset*)asset image:(UIImage *)image videoPath:(NSURL*)videoPath{
 }
 
