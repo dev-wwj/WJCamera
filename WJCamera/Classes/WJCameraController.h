@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
+#import "WJCameraConfig.h"
 
 @protocol CameraDelegate <NSObject>
 
@@ -17,7 +18,9 @@
 
 @interface WJCameraController : UIViewController
 
-@property(nullable, strong) id <CameraDelegate> delegate;
+@property(nonnull,strong,nonatomic)WJCameraConfig *config;
+@property(nullable, weak) id <CameraDelegate> delegate;
 
++(instancetype)buildWithConfig:(WJCameraConfig *)config;
 @end
 

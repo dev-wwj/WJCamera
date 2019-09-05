@@ -15,6 +15,7 @@
 #import "NSBundle+WJLibrary.h"
 #import "SavaFileALbumUtil.h"
 #import "UIImage+WJLibrary.h"
+#import "WJCameraConfig.h"
 #import "WJCameraController.h"
 #import "WJProgressView.h"
 #import "WJShootButton.h"

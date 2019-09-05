@@ -35,6 +35,13 @@
     return self;
 }
 
+-(void)setMax_time:(NSInteger)Max_time{
+    if (_Max_time != Max_time) {
+        _Max_time = Max_time;
+        _progerssView.timeMax = _Max_time;
+    }
+}
+
 -(void)setup{
     _progerssView = [[WJProgressView alloc] initWithFrame:self.bounds];
     [self addSubview:_progerssView];
@@ -43,9 +50,9 @@
     _captureButton.fillLayer.fillColor = UIColor.redColor.CGColor;
     [self addSubview:_captureButton];
     
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressForShoot:)];
-    longPress.minimumPressDuration = 0.5; //定义按的时间
-    [_captureButton addGestureRecognizer:longPress];
+    _longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressForShoot:)];
+    _longPress.minimumPressDuration = 0.5; //定义按的时间
+    [_captureButton addGestureRecognizer:_longPress];
     [self reset];
 }
 
@@ -65,17 +72,30 @@
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         NSLog(@"%@",@"press_begin");
         [self.progerssView startAnimation];
+        _isEndTime = NO;
+        [self performSelector:@selector(endOfTimeRecord) withObject:nil afterDelay:_Max_time]; // 最大录制时间到后结束
         if (_block) {
             _block(CAPTURE_RECORD_START);
         }
     }else if(recognizer.state == UIGestureRecognizerStateEnded){
          NSLog(@"%@",@"press_end");
-        recognizer.cancelsTouchesInView = NO;
+        if (_isEndTime) {
+            return;
+        }
         [self.progerssView endAnimation];
         if (_block) {
             _block(CAPTURE_RECORD_END);
         }
     }
 }
+
+-(void)endOfTimeRecord{
+    _isEndTime = YES;
+    [self.progerssView endAnimation];
+    if (_block) {
+        _block(CAPTURE_RECORD_END);
+    }
+}
+
 
 @end

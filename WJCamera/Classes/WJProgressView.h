@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WJProgressView : UIView
 
-@property(assign,nonatomic)NSInteger timerMax;     //default is 10
+@property(assign,nonatomic)NSInteger timeMax;     //default is 10
 @property(assign,nonatomic)CGFloat progressRingWidth;  //default is 5
 @property(assign,nonatomic)UIColor *strokeColor;  //efault is greenColor
 

@@ -71,6 +71,12 @@ API_AVAILABLE(ios(10.0))
 
 @implementation WJCameraController
 
++(instancetype)buildWithConfig:(nonnull WJCameraConfig *)config{
+    WJCameraController *controller = [[WJCameraController alloc]init];
+    controller.config = config;
+    return controller;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
@@ -108,8 +114,8 @@ API_AVAILABLE(ios(10.0))
     [self onHiddenFocusCurSorAction];
     
     _captureCenter = CGPointMake(VIEW_W(self.view)/2, VIEW_H(self.view)-60);
-    
     _captureView = [[CaptureView alloc]initWithFrame:CGRectMake(0,0, 70, 70)];
+    _captureView.Max_time = _config.Max_time;
     _captureView.center = _captureCenter;
     [self.view addSubview:_captureView];
     
@@ -275,8 +281,6 @@ API_AVAILABLE(ios(10.0))
     [self takeCompletion];
 }
 
-
-
 -(void)takePic{
     if (@available(iOS 10.0, *)) {
         AVCaptureConnection *connection = [self.captureStillImageOutput connectionWithMediaType:AVMediaTypeVideo];
@@ -346,7 +350,7 @@ API_AVAILABLE(ios(10.0))
         }
         connection.videoOrientation = [self.previewLayer connection].videoOrientation;
         NSTimeInterval interval = [[NSDate date] timeIntervalSince1970];
-        NSString *filePath = [NSTemporaryDirectory() stringByAppendingString:[NSString stringWithFormat:@"av%lf.mov",interval]];
+        NSString *filePath = [NSTemporaryDirectory() stringByAppendingString:[NSString stringWithFormat:@"av%.0f.mov",interval]];
         [self.captureMovieFileOutput startRecordingToOutputFileURL:[NSURL fileURLWithPath:filePath] recordingDelegate:self];
     }
 }

@@ -45,7 +45,6 @@
 }
 
 -(void)setup{
-    self.timerMax = 10;
     self.progressRingWidth = 5;
     self.strokeColor = UIColor.greenColor;
 }
@@ -92,13 +91,6 @@
     }
 }
 
--(void)setTimerMax:(NSInteger)timerMax{
-    if (_timerMax != timerMax) {
-        _timerMax = timerMax;
-        self.basicAnimation.duration = timerMax;
-    }
-}
-
 // 圆形
 - (UIBezierPath *)circlePath
 {
@@ -111,7 +103,7 @@
 {
     if (!_basicAnimation) {
         CABasicAnimation *animate = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        animate.duration = _timerMax;
+        animate.duration = _timeMax;
         animate.fromValue = @(0);
         animate.toValue = @(1);
         animate.fillMode = kCAFillModeForwards;

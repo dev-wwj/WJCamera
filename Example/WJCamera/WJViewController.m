@@ -27,15 +27,15 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)start:(id)sender {
-    WJCameraController *wjc =[[WJCameraController alloc] init];
-    [self presentViewController:wjc animated:YES completion:nil];
+    WJCameraConfig *config = [WJCameraConfig config];
+    config.Max_time = 10; //Default 15 s
+    WJCameraController *wjc =[WJCameraController buildWithConfig:config];
     wjc.delegate = self;
+    [self presentViewController:wjc animated:YES completion:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-  
-    
 }
 
 -(void)completeWithAsset:(PHAsset*)asset image:(UIImage *)image videoPath:(NSURL*)videoPath{

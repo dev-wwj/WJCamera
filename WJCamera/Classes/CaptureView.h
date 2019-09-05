@@ -24,9 +24,12 @@ typedef void(^CaptureBlock)(CaptureAction action);
 
 @property(strong, nonatomic) WJShootButton *captureButton;
 @property(strong, nonatomic) WJProgressView * progerssView;
+@property(strong, nonatomic) UILongPressGestureRecognizer *longPress;
 
-@property(assign, nonatomic) NSInteger Max_timer; // 最长录制时间
-@property(assign, nonatomic) NSInteger Min_timer; // 最短录制时间
+@property(assign, nonatomic) NSInteger Max_time; // 最长录制时间
+@property(assign, nonatomic) NSInteger Min_time; // 最短录制时间
+
+@property(assign, nonatomic) BOOL isEndTime;
 
 @property(copy, nonatomic) CaptureBlock block;
 
