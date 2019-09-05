@@ -10,16 +10,30 @@ iOS相机
 
 ## Example
 
-#import "WJCameraController.h"
+1、必要权限申请
+-info.plist 中添加以下配置
 
+Privacy - Camera Usage Description
+
+Privacy - Microphone Usage Description
+
+Privacy - Photo Library Usage Description
+
+2、使用
+
+#import "WJCameraController.h"
 
 //创建
 
-WJCameraController *wjc =[[WJCameraController alloc] init];
-
-wjc.delegate = self;
-
-[self presentViewController:wjc animated:YES completion:nil];
+ WJCameraConfig *config = [WJCameraConfig config];
+ 
+ config.Max_time = 10; // 录制时长 Default 15 s
+ 
+ WJCameraController *wjc =[WJCameraController buildWithConfig:config];
+ 
+ wjc.delegate = self;
+ 
+ [self presentViewController:wjc animated:YES completion:nil];
 
 
 //通过delegate，得到拍摄的照片或视频.
