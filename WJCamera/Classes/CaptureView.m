@@ -14,7 +14,6 @@
 -(instancetype)init{
     self = [super init];
     if (self) {
-        [self setup];
     }
     return self;
 }
@@ -22,7 +21,6 @@
 -(instancetype)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self setup];
     }
     return self;
 }
@@ -30,7 +28,6 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        [self setup];
     }
     return self;
 }
@@ -42,21 +39,71 @@
     }
 }
 
--(void)setup{
-    _progerssView = [[WJProgressView alloc] initWithFrame:self.bounds];
-    [self addSubview:_progerssView];
-    _captureButton = [[WJShootButton alloc]initWithFrame:CGRectMake(0, 0, 60, 60 )];
-    _captureButton.center = CGPointMake(VIEW_W(self)/2, VIEW_H(self)/2);
-    _captureButton.fillLayer.fillColor = UIColor.redColor.CGColor;
-    [self addSubview:_captureButton];
-    
-    _longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressForShoot:)];
-    _longPress.minimumPressDuration = 0.5; //定义按的时间
-    [_captureButton addGestureRecognizer:_longPress];
-    [self reset];
+-(void)setTakeMode:(CAMERA_TAKE_MODE)takeMode{
+    if (_takeMode != takeMode) {
+        _takeMode = takeMode;
+        switch (takeMode) {
+            case ALL:
+               [self modeAll];
+                break;
+            case PHOTO:
+                [self modePhoto];
+                break;
+            case VIDOE:
+                [self modeVideo];
+                break;
+            default:
+                break;
+        }
+    }
 }
 
--(void)reset{
+-(void)modeAll{
+    [self addSubview:self.progerssView];
+    [self addSubview:self.captureButton];
+    [_captureButton addGestureRecognizer:self.longPress];
+    [self btnAddTarget];
+}
+
+-(void)modePhoto{
+    [self addSubview:self.captureButton];
+}
+
+-(void)modeVideo{
+    [self addSubview:self.progerssView];
+    [self addSubview:self.captureButton];
+    [_captureButton addGestureRecognizer:self.longPress];
+}
+
+-(WJProgressView*)progerssView{
+    if (!_progerssView) {
+        _progerssView = [[WJProgressView alloc] initWithFrame:self.bounds];
+    }
+    return _progerssView;
+}
+
+-(WJShootButton *)captureButton{
+    if (!_captureButton) {
+        _captureButton = [[WJShootButton alloc]initWithFrame:CGRectMake(0, 0, 60, 60 )];
+        _captureButton.center = CGPointMake(VIEW_W(self)/2, VIEW_H(self)/2);
+        _captureButton.fillLayer.fillColor = UIColor.redColor.CGColor;
+    }
+    return _captureButton;
+}
+
+-(UILongPressGestureRecognizer *)longPress{
+    if (!_longPress) {
+        _longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressForShoot:)];
+        if (_takeMode == VIDOE) {
+            _longPress.minimumPressDuration = 0.0;
+        }else{
+            _longPress.minimumPressDuration = 0.5; //定义按的时间
+        }
+    }
+    return _longPress;
+}
+
+-(void)btnAddTarget{
     [_captureButton addTarget:self action:@selector(takeShoot:) forControlEvents:UIControlEventTouchUpInside];
 }
 

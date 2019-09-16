@@ -114,18 +114,12 @@ API_AVAILABLE(ios(10.0))
     [self onHiddenFocusCurSorAction];
     
     _captureCenter = CGPointMake(VIEW_W(self.view)/2, VIEW_H(self.view)-60);
+    
     _captureView = [[CaptureView alloc]initWithFrame:CGRectMake(0,0, 70, 70)];
     _captureView.Max_time = _config.Max_time;
+    _captureView.takeMode = _config.takeMode;
     _captureView.center = _captureCenter;
     [self.view addSubview:_captureView];
-    
-    //切换摄像头
-    _btnChangeCamera = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnChangeCamera.frame = CGRectMake(VIEW_W(self.view) - 60, 20 , 46 , 46);
-    [_btnChangeCamera setImage: [UIImage wj_bundleImageNamed:@"btn_video_flip_camera"] forState:UIControlStateNormal];
-    [self.view addSubview: _btnChangeCamera];
-    [_btnChangeCamera addTarget:self action:@selector(changeCamera:) forControlEvents:UIControlEventTouchUpInside];
-    
     WS(weakSelf);
     _captureView.block = ^(CaptureAction action) {
         switch (action) {
@@ -145,6 +139,13 @@ API_AVAILABLE(ios(10.0))
                 break;
         }
     };
+    
+    //切换摄像头
+    _btnChangeCamera = [UIButton buttonWithType:UIButtonTypeCustom];
+    _btnChangeCamera.frame = CGRectMake(VIEW_W(self.view) - 60, 20 , 46 , 46);
+    [_btnChangeCamera setImage: [UIImage wj_bundleImageNamed:@"btn_video_flip_camera"] forState:UIControlStateNormal];
+    [self.view addSubview: _btnChangeCamera];
+    [_btnChangeCamera addTarget:self action:@selector(changeCamera:) forControlEvents:UIControlEventTouchUpInside];
     
     //取消拍摄
     _btnBack = [UIButton buttonWithType:UIButtonTypeCustom];

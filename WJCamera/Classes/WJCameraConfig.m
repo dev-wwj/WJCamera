@@ -11,7 +11,8 @@
 
 +(instancetype)config{
     WJCameraConfig *config = [[WJCameraConfig alloc]init];
-    config.Max_time  = 15;
+    config.Max_time = 15;
+    config.takeMode = ALL;
     return config;
 }
 

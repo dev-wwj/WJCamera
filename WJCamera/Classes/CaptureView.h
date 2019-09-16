@@ -10,6 +10,7 @@
 
 #import "WJProgressView.h"
 #import "WJShootButton.h"
+#import "WJCameraConfig.h"
 
 
 typedef NS_ENUM(NSInteger,CaptureAction) {
@@ -28,6 +29,9 @@ typedef void(^CaptureBlock)(CaptureAction action);
 
 @property(assign, nonatomic) NSInteger Max_time; // 最长录制时间
 @property(assign, nonatomic) NSInteger Min_time; // 最短录制时间
+
+@property(assign, nonatomic)  CAMERA_TAKE_MODE takeMode; //相机类型
+
 
 @property(assign, nonatomic) BOOL isEndTime;
 
