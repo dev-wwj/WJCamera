@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WJCamera'
-  s.version          = '0.2.1'
-  s.summary          = '有趣的相机'
+  s.version          = '1.0.0'
+  s.summary          = 'A camera can click to take a picture and long press to record'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/dev-wwj/WJCamera.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '11.0'
 
   s.source_files = 'WJCamera/Classes/**/*'
   s.resource_bundles = {
