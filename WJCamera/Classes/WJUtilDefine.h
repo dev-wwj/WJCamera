@@ -9,11 +9,9 @@
 #ifndef WJUtilDefine_h
 #define WJUtilDefine_h
 
-
-#define VIEW_W(view) view.frame.size.width
-#define VIEW_H(view) view.frame.size.height
-
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 
+#import "UIButton+Enlarge.h"
 
 #endif /* WJUtilDefine_h */
+

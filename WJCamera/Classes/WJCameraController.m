@@ -9,7 +9,6 @@
 #import "WJCameraController.h"
 #import "CaptureView.h"
 #import "WJUtilDefine.h"
-#import "SavaFileALbumUtil.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -21,41 +20,39 @@
 typedef void(^PropertyChangeBlock)(AVCaptureDevice *captureDevice);
 
 API_AVAILABLE(ios(10.0))
-@interface WJCameraController ()<AVCaptureFileOutputRecordingDelegate,AVCapturePhotoCaptureDelegate,CAAnimationDelegate>
+@interface WJCameraController ()<AVCaptureFileOutputRecordingDelegate,AVCapturePhotoCaptureDelegate,CAAnimationDelegate,UIGestureRecognizerDelegate> {
+    dispatch_queue_t _sessonQueen;
+}
 
 
 //负责输入和输出设备之间的数据传递
 @property(nonatomic)AVCaptureSession *session;
-@property (strong,nonatomic) AVCaptureMovieFileOutput*captureMovieFileOutput;//视频输出流
-@property (strong,nonatomic) AVCapturePhotoOutput *capturePhotoOutput;//照片输出流
-@property (strong,nonatomic) AVCaptureStillImageOutput *captureStillImageOutput;//照片输出流
 @property (strong,nonatomic) AVCaptureDeviceInput *captureDeviceInput;//负责从AVCaptureDevice获得输入数据
 @property (strong,nonatomic) AVCaptureDeviceInput* audioCaptureDeviceInput;//音频输入数据
-
+@property (strong,nonatomic) AVCaptureMovieFileOutput*captureMovieFileOutput;//视频输出流
+@property (strong,nonatomic) AVCapturePhotoOutput *capturePhotoOutput;//照片输出流
 
 //图像预览层，实时显示捕获的图像
-@property(nonatomic)AVCaptureVideoPreviewLayer *previewLayer;
-
-//后台任务标识
-@property (assign,nonatomic) UIBackgroundTaskIdentifier backgroundTaskIdentifier;
-@property (assign,nonatomic) UIBackgroundTaskIdentifier lastBackgroundTaskIdentifier;
+@property(strong,nonatomic)AVCaptureVideoPreviewLayer *previewLayer;
 
 @property (strong,nonatomic) UITapGestureRecognizer *recognizerFocusing;
 
-@property(strong, nonatomic)CaptureView *captureView;  // 拍照按钮
-@property (assign, nonatomic) CGPoint captureCenter;
-@property (strong,nonatomic)UIView *priviewBg;  // 镜头预览
+@property (strong, nonatomic) UIView *safeArea;
+@property(strong, nonatomic)  CaptureView *captureView;  // 拍照按钮
+
+@property (strong,nonatomic)UIView *previewBg;  // 镜头预览
 @property (assign, nonatomic) BOOL isFocus;
 @property (strong, nonatomic) UIImageView *focusCursor; //聚焦光标
 
 @property (strong, nonatomic) UIButton *btnBack;
-@property (strong, nonatomic) UIButton *btnConfirm;
-@property (strong, nonatomic) UIButton *btnRephotography;
+
+@property (strong, nonatomic) UIButton *btnConfirm, *btnCancle;  // 完成｜取消
+
+@property (strong, nonatomic) NSLayoutConstraint *confirmCenterYConstration, *cancleCenterYCanstration;
 
 @property (strong, nonatomic) UIButton *btnChangeCamera;
 
-
-@property (strong, nonatomic) UIImageView *priviewImageView; //图片预览
+@property (strong, nonatomic) UIImageView *previewImageView; //图片预览
 
 @property (strong, nonatomic) HAVPlayer *player; //视频预览
 @property (strong, nonatomic) AVPlayerItem *videoItem;
@@ -66,15 +63,25 @@ API_AVAILABLE(ios(10.0))
 
 @property (strong, nonatomic) NSURL *completedVideoUrl;
 
+@property(nonatomic, copy) AVCaptureSessionPreset sessionPreset;  // 设置录像分辨率
+
+@property(strong, nonatomic) CADisplayLink *displayLink;
+
+@property (assign, nonatomic) CFTimeInterval beginTime;
 
 @end
 
 @implementation WJCameraController
 
-+(instancetype)buildWithConfig:(nonnull WJCameraConfig *)config{
-    WJCameraController *controller = [[WJCameraController alloc]init];
-    controller.config = config;
-    return controller;
+- (instancetype _Nullable )initWithTakeMode:(CAMERA_TAKE_MODE) takeMode delegate:(id<CameraDelegate>_Nullable)delegate {
+    self = [super init];
+    if (self) {
+        self.minDuration = 3.0;
+        self.maxDuration = 15.0;
+        self.takeMode = takeMode;
+        self.delegate = delegate;
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -84,12 +91,25 @@ API_AVAILABLE(ios(10.0))
     self.view.backgroundColor = UIColor.clearColor;
 
     [self setupSubView];
-    [self customCamera];
+    [self setupCamera];
+}
+
+- (void)viewSafeAreaInsetsDidChange{
+    [super viewSafeAreaInsetsDidChange];
+    
+    [self.view addConstraints:[NSLayoutConstraint  constraintsWithVisualFormat:@"H:|[view]|" options:kNilOptions metrics:nil views:@{@"view":_safeArea}]];
+
+    if (@available(iOS 11.0, *)) {
+        [self.view addConstraints:[NSLayoutConstraint  constraintsWithVisualFormat:@"V:|-Top-[view]-Bottom-|" options:kNilOptions metrics:@{@"Top":@(self.view.safeAreaInsets.top),@"Bottom":@(self.view.safeAreaInsets.bottom)} views:@{@"view":_safeArea}]];
+    } else {
+        [self.view addConstraints:[NSLayoutConstraint  constraintsWithVisualFormat:@"V:|-24-[view]-0-|" options:kNilOptions metrics:nil views:@{@"view":_safeArea}]];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self.session startRunning];
+    [self startPreview];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -97,43 +117,59 @@ API_AVAILABLE(ios(10.0))
     [self.session stopRunning];
 }
 
+
 -(void)setupSubView{
-    _priviewBg = [[UIView alloc] initWithFrame:self.view.bounds];
-    _priviewBg.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:_priviewBg];
+    self.view.backgroundColor = UIColor.blackColor;
     
-    _priviewImageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-    [self.view insertSubview:_priviewImageView aboveSubview:_priviewBg];
-    _priviewImageView.hidden = TRUE;
+    _safeArea = [[UIView alloc]init];
+    _safeArea.translatesAutoresizingMaskIntoConstraints = NO;
+    _safeArea.backgroundColor = UIColor.clearColor;
+    [self.view addSubview:_safeArea];
+    
+    _previewBg = [[UIView alloc] init];
+    _previewBg.translatesAutoresizingMaskIntoConstraints = NO;
+    _previewBg.backgroundColor = [UIColor blackColor];
+    [_safeArea addSubview:_previewBg];
+    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|" options:kNilOptions metrics:nil views:@{@"view":_previewBg}]];
+    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-top-[view]-bottom-|" options:kNilOptions metrics:@{@"top":@(44),@"bottom":@(100)} views:@{@"view":_previewBg}]];
+    
+    _previewImageView = [[UIImageView alloc]init];
+    _previewImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _previewImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [_previewBg addSubview:_previewImageView];
+    _previewImageView.hidden = YES;
+    [_previewBg addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|" options:kNilOptions metrics:nil views:@{@"view":_previewImageView}]];
+    [_previewBg addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:kNilOptions metrics:nil views:@{@"view":_previewImageView}]];
     
     // 对焦
-    self.focusCursor = [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 60,60)];
-    [self.view addSubview:self.focusCursor];
-   
-    self.focusCursor.image = [UIImage wj_bundleImageNamed:@"focusing"];
+    _focusCursor = [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 60,60)];
+    [_previewBg addSubview:_focusCursor];
+    _focusCursor.image = [UIImage wj_bundleImageNamed:@"focusing"];
     [self onHiddenFocusCurSorAction];
     
-    _captureCenter = CGPointMake(VIEW_W(self.view)/2, VIEW_H(self.view)-60);
-    
-    _captureView = [[CaptureView alloc]initWithFrame:CGRectMake(0,0, 70, 70)];
-    _captureView.Max_time = _config.Max_time;
-    _captureView.takeMode = _config.takeMode;
-    _captureView.center = _captureCenter;
-    [self.view addSubview:_captureView];
+    [self addGenstureRecognizer];
+
+    _captureView = [[CaptureView alloc]init];
+    _captureView.progressColor = _progressColor ?: UIColor.brownColor;
+    _captureView.translatesAutoresizingMaskIntoConstraints = NO;
+    [_safeArea addSubview:_captureView];
+    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_captureView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_safeArea attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[view(88)]" options:kNilOptions metrics:nil views:@{@"view":_captureView}]];
+    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[view(88)]-10-|" options:kNilOptions metrics:nil views:@{@"view":_captureView}]];
     WS(weakSelf);
     _captureView.block = ^(CaptureAction action) {
         switch (action) {
-            case CAPTURE_TAKE_PIC:
+            case Tap:
                 //拍照
-                [weakSelf takePic];
+                [weakSelf shoot];
                 break;
-            case CAPTURE_RECORD_START:
+            case LongPress:
                 //开始录像
                 [weakSelf beginRecode];
                 break;
-            case CAPTURE_RECORD_END:
+            case EndLongPress:
                 //结束录像
-                [weakSelf.captureMovieFileOutput stopRecording];
+                [weakSelf endRecode];
                 break;
             default:
                 break;
@@ -142,47 +178,66 @@ API_AVAILABLE(ios(10.0))
     
     //切换摄像头
     _btnChangeCamera = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnChangeCamera.frame = CGRectMake(VIEW_W(self.view) - 60, 20 , 46 , 46);
+    _btnChangeCamera.translatesAutoresizingMaskIntoConstraints = NO;
     [_btnChangeCamera setImage: [UIImage wj_bundleImageNamed:@"btn_video_flip_camera"] forState:UIControlStateNormal];
-    [self.view addSubview: _btnChangeCamera];
     [_btnChangeCamera addTarget:self action:@selector(changeCamera:) forControlEvents:UIControlEventTouchUpInside];
+    [_safeArea addSubview: _btnChangeCamera];
+    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[view(44)]-10-|" options:kNilOptions metrics:nil views:@{@"view":_btnChangeCamera}]];
+    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view(44)]" options:kNilOptions metrics:nil views:@{@"view":_btnChangeCamera}]];
     
     //取消拍摄
     _btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+    _btnBack.translatesAutoresizingMaskIntoConstraints = NO;
     [_btnBack setImage:[UIImage wj_bundleImageNamed:@"wjc_back"] forState:UIControlStateNormal];
-    _btnBack.frame = CGRectMake(0, 0, 46, 46);
-    _btnBack.center = CGPointMake(_captureCenter.x/2, _captureCenter.y);
-    [self.view addSubview:_btnBack];
     [_btnBack addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    [_safeArea addSubview:_btnBack];
+    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnBack attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnBack attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_safeArea attribute:NSLayoutAttributeCenterX multiplier:0.5 constant:0.0]];
+    [_btnBack setEnlargeEdge:44];
     
-    _btnRephotography = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_btnRephotography setImage:[UIImage wj_bundleImageNamed:@"take_cancle"] forState:UIControlStateNormal];
-    _btnRephotography.frame = CGRectMake(0, 0, 46, 46);
-    _btnRephotography.center = _captureCenter;
-    [self.view insertSubview:_btnRephotography  belowSubview:_captureView];
-    [_btnRephotography addTarget:self action:@selector(rephotography:) forControlEvents:UIControlEventTouchUpInside];
-    _btnRephotography.hidden = TRUE;
+    _btnCancle = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_btnCancle setImage:[UIImage wj_bundleImageNamed:@"take_cancle"] forState:UIControlStateNormal];
+    [_btnCancle addTarget:self action:@selector(rephotography:) forControlEvents:UIControlEventTouchUpInside];
+    [_safeArea insertSubview:_btnCancle  belowSubview:_captureView];
+    _btnCancle.alpha = 0.0;
+    _btnCancle.translatesAutoresizingMaskIntoConstraints = NO;
+    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnCancle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     
     _btnConfirm = [UIButton buttonWithType:UIButtonTypeCustom];
     [_btnConfirm setImage:[UIImage wj_bundleImageNamed:@"take_confirm"] forState:UIControlStateNormal];
-    _btnConfirm.frame = CGRectMake(0, 0, 46, 46);
-    _btnConfirm.center = _captureCenter;
-    [self.view insertSubview:_btnConfirm belowSubview:_captureView];
     [_btnConfirm addTarget:self action:@selector(confirm:) forControlEvents:UIControlEventTouchUpInside];
-    _btnConfirm.hidden = TRUE;
+    [_safeArea insertSubview:_btnConfirm belowSubview:_captureView];
+    _btnConfirm.alpha = 0.0;
+    _btnConfirm.translatesAutoresizingMaskIntoConstraints = NO;
+    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnConfirm attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+    [self updateSafeAreaConstraintsWithComplete:NO];
 }
 
--(void)customCamera{
-    //初始化会话，用来结合输入输出
-    self.session = [[AVCaptureSession alloc] init];
-    //设置分辨率 (设备支持的最高分辨率)
-    if ([self.session canSetSessionPreset:AVCaptureSessionPresetHigh]) {
-        self.session.sessionPreset = AVCaptureSessionPresetHigh;
+- (void)updateSafeAreaConstraintsWithComplete:(BOOL)complate {
+    if (_confirmCenterYConstration) {
+        [_safeArea removeConstraint:_confirmCenterYConstration];
+        _confirmCenterYConstration = nil;
     }
-    //取得输入涉笔后置摄像头
+    if (_cancleCenterYCanstration) {
+        [_safeArea removeConstraint:_cancleCenterYCanstration];
+        _cancleCenterYCanstration = nil;
+    }
+    if (!complate) {
+        _cancleCenterYCanstration = [NSLayoutConstraint constraintWithItem:_btnCancle attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+        _confirmCenterYConstration = [NSLayoutConstraint constraintWithItem:_btnConfirm attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+    }else {
+        _cancleCenterYCanstration = [NSLayoutConstraint constraintWithItem:_btnCancle attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterX multiplier:0.5 constant:0.0];
+        _confirmCenterYConstration = [NSLayoutConstraint constraintWithItem:_btnConfirm attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterX multiplier:1.5 constant:0.0];
+    }
+    [_safeArea addConstraints:@[_cancleCenterYCanstration,_confirmCenterYConstration]];
+    [_safeArea updateConstraintsIfNeeded];
+}
+
+-(void)setupCamera{
+    //取得输入设备后置摄像头
     AVCaptureDevice *captureDevice = [self getCameraDeviceWithPosition:AVCaptureDevicePositionBack];
     //音频输入设备
-    AVCaptureDevice *audioCaptureDevice=[[AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio] firstObject];
+    AVCaptureDevice *audioCaptureDevice = [[AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio] firstObject];
     //初始化输入设备
     NSError *error = nil;
     self.captureDeviceInput = [[AVCaptureDeviceInput alloc] initWithDevice:captureDevice error:&error];
@@ -190,6 +245,10 @@ API_AVAILABLE(ios(10.0))
         NSLog(@"取得设备输入对象时出错，错误原因：%@",error.localizedDescription);
         return;
     }
+    if ([self.session canAddInput:self.captureDeviceInput]) {
+        [self.session addInput:self.captureDeviceInput];
+    }
+    
     //添加音频
     error = nil;
     self.audioCaptureDeviceInput = [[AVCaptureDeviceInput alloc]initWithDevice:audioCaptureDevice error:&error];
@@ -197,77 +256,91 @@ API_AVAILABLE(ios(10.0))
         NSLog(@"取得设备输入对象时出错，错误原因：%@",error.localizedDescription);
         return;
     }
-    //输出对象
-    //拍照
-    if (@available(iOS 10.0, *)) {
-        self.capturePhotoOutput = [AVCapturePhotoOutput new];
-        if ([self.session canAddOutput:self.capturePhotoOutput]) {
-            [self.session addOutput:self.capturePhotoOutput];
-        }
-    } else {
-        // Fallback on earlier versions
-        self.captureStillImageOutput = [AVCaptureStillImageOutput new];
-        if ([self.session canAddOutput:self.captureStillImageOutput]) {
-            [self.session addOutput:self.captureStillImageOutput];
-        }
-    }
     
-    //视频输出
-    self.captureMovieFileOutput = [AVCaptureMovieFileOutput new];
     if ([self.session canAddInput:self.audioCaptureDeviceInput]) {
         [self.session addInput:self.audioCaptureDeviceInput];
     }
-    
-    //将输入设备添加到会话
-    if ([self.session canAddInput:self.captureDeviceInput]) {
-        [self.session addInput:self.captureDeviceInput];
-        //设置视频防抖
-        AVCaptureConnection *connection = [self.captureMovieFileOutput connectionWithMediaType:AVMediaTypeVideo];
-        if ([connection isVideoStabilizationSupported]) {
-            connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeCinematic;
+    [self.session setSessionPreset:_previewSessionPreset?:AVCaptureSessionPresetHigh];
+    [self capturePhotoOutput];
+    [self captureMovieFileOutput];
+}
+
+//初始化会话，用来结合输入输出
+- (AVCaptureSession *)session {
+    if (!_session) {
+        _session = [[AVCaptureSession alloc] init];
+    }
+    return _session;
+}
+
+// 设置输出分辨率
+- (void)setSessionPreset:(AVCaptureSessionPreset)sessionPreset {
+    _sessionPreset = sessionPreset;
+    if ([self.session canSetSessionPreset:sessionPreset]) {
+        self.session.sessionPreset = AVCaptureSessionPresetPhoto;
+    }else {
+        NSLog(@"设备不支持此分辨率");
+    }
+}
+
+//输出对象
+//拍照
+- (AVCapturePhotoOutput *)capturePhotoOutput API_AVAILABLE(ios(10.0)){
+    if (!_capturePhotoOutput) {
+        _capturePhotoOutput = [AVCapturePhotoOutput new];
+        if ([self.session canAddOutput:_capturePhotoOutput]) {
+            [self.session addOutput:_capturePhotoOutput];
         }
     }
-    //将输出设备添加到会话 (刚开始 是照片为输出对象)
-    if ([self.session canAddOutput:self.captureMovieFileOutput]) {
-        [self.session addOutput:self.captureMovieFileOutput];
+    return _capturePhotoOutput;
+}
+
+//视频
+- (AVCaptureMovieFileOutput *)captureMovieFileOutput {
+    if (!_captureMovieFileOutput) {
+        _captureMovieFileOutput = [AVCaptureMovieFileOutput new];
+        if ([self.session canAddOutput:_captureMovieFileOutput]) {
+            [self.session addOutput:_captureMovieFileOutput];
+        }
+        //设置视频防抖
+        AVCaptureConnection * captureCollection = [_captureMovieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+        if ([captureCollection isVideoStabilizationSupported]) {
+            captureCollection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeCinematic;
+        }
     }
-    
-    //预览层，用于实时展示摄像头状态
-    self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
-    self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;//填充模式
-    CALayer *layer = _priviewBg.layer;
-    layer.masksToBounds = YES;
-    self.previewLayer.frame = layer.bounds;
-    self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    [layer insertSublayer:self.previewLayer above:self.focusCursor.layer];
-    [self addGenstureRecognizer];
+    return _captureMovieFileOutput;
 }
 
 
--(void)resetView{
-    _captureView.hidden = NO;
-    [_captureView reset];
-    _btnBack.hidden = NO;
-    _btnConfirm.hidden = YES;
-    _btnRephotography.hidden = YES;
-    _recognizerFocusing.enabled = YES;
-    _priviewImageView.hidden = YES;
-    if (self.player) {
-        [self.player stopPlayer];
-        self.player.hidden = YES;
+- (void)startPreview {
+    [self previewLayer];
+}
+
+//预览层，用于实时展示摄像头状态
+- (AVCaptureVideoPreviewLayer*)previewLayer {
+    if (!_previewLayer) {
+        _previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
+        _previewLayer.videoGravity = AVLayerVideoGravityResizeAspect;//填充模式
+        CALayer *layer = _previewBg.layer;
+        layer.masksToBounds = YES;
+        _previewLayer.frame = layer.bounds;
+        [layer insertSublayer:_previewLayer below:self.focusCursor.layer];
     }
-    _completedImg = nil;
-    _completedVideoUrl = nil;
+    return _previewLayer;
+}
+
+
+- (void)setTakeMode:(CAMERA_TAKE_MODE)takeMode{
+    _takeMode = takeMode;
 }
 
 -(void)takeCompletion{
-    // 保存
-    if (_completedImg) {
-        [self saveImageToAsset:_completedImg];
-    }else if(_completedVideoUrl){
-        [self saveToAsset:_completedVideoUrl];
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
+//    保存
+//    if (_completedImg) {
+//        [self saveImageToAsset:_completedImg];
+//    }else if(_completedVideoUrl){
+//        [self saveToAsset:_completedVideoUrl];
+//    }
 }
 
 -(void)back:(id)sender{
@@ -279,80 +352,109 @@ API_AVAILABLE(ios(10.0))
 }
 
 -(void)confirm:(id)sender{
-    [self takeCompletion];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)takePic{
-    if (@available(iOS 10.0, *)) {
-        AVCaptureConnection *connection = [self.captureStillImageOutput connectionWithMediaType:AVMediaTypeVideo];
-        if (connection.isVideoOrientationSupported) {
-            connection.videoOrientation = [self.previewLayer connection].videoOrientation;
-        }
-        [self.capturePhotoOutput capturePhotoWithSettings:[AVCapturePhotoSettings photoSettings] delegate:self];
-    }else{
-        AVCaptureConnection *connection = [self.captureStillImageOutput connectionWithMediaType:AVMediaTypeVideo];
-        if (connection.isVideoOrientationSupported) {
-            connection.videoOrientation = [self.previewLayer connection].videoOrientation;
-        }
-        WS(weakSelf);
-        id takePicture = ^(CMSampleBufferRef sampleBuffer,NSError *error){
-            if (sampleBuffer == NULL) {
-                return ;
-            }
-            NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:sampleBuffer];
-            UIImage *image = [[UIImage alloc]initWithData:imageData];
-            [weakSelf takePictureSuccess:image];
-        };
-        [self.captureStillImageOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:takePicture];
+-(void)shoot{
+    [self.capturePhotoOutput connectionWithMediaType:AVMediaTypeVideo].videoMirrored = [self.captureDeviceInput device].position == AVCaptureDevicePositionFront;
+    [self.capturePhotoOutput capturePhotoWithSettings:[AVCapturePhotoSettings photoSettings] delegate:self];
+}
+
+-(void)shootSuccess:(UIImage *)image{
+    if ([_delegate respondsToSelector:@selector(takePhotoComplete:)]) {
+        [_delegate takePhotoComplete:image];
     }
+    _previewImageView.hidden = NO;
+    _previewImageView.image = image;
+    [self completeView];
 }
 
--(void)takePictureSuccess:(UIImage *)image{
-    _priviewImageView.hidden = NO;
-    _priviewImageView.image = image;
-    _completedImg = image;
-    [self takeSuccessView];
-}
-
--(void)takeVideoSuccess:(NSURL*)videoURL{
-    _completedVideoUrl = videoURL;
-    if (!self.player) {
-        self.player = [[HAVPlayer alloc] initWithFrame:self.priviewBg.bounds withShowInView:self.priviewBg url:videoURL];
-    } else {
-        if (videoURL) {
-            self.player.videoUrl = videoURL;
-            self.player.hidden = NO;
-        }
+-(void)resetView{
+    self.previewLayer.hidden = NO;
+    _btnChangeCamera.hidden = NO;
+    _btnBack.hidden = NO;
+    _recognizerFocusing.enabled = YES;
+    _previewImageView.hidden = YES;
+    if (self.player) {
+        [self.player stopPlayer];
+        self.player.hidden = YES;
     }
-    [self takeSuccessView];
-}
-
--(void)takeSuccessView{
-    _captureView.hidden = YES;
-    _btnBack.hidden = YES;
-    _btnConfirm.hidden = NO;
-    _btnRephotography.hidden = NO;
-    _recognizerFocusing.enabled = NO;
-    _btnRephotography.center = _captureCenter;
-    _btnConfirm.center = _captureCenter;
-    WS(weakSelf);
+    _completedImg = nil;
+    _completedVideoUrl = nil;
+    
+    [self updateSafeAreaConstraintsWithComplete:NO];
     [UIView animateWithDuration:0.25 animations:^{
-        weakSelf.btnRephotography.center = CGPointMake(weakSelf.captureCenter.x/2, weakSelf.captureCenter.y);
-        weakSelf.btnConfirm.center = CGPointMake(weakSelf.captureCenter.x/2 * 3, weakSelf.captureCenter.y);
+        self->_captureView.alpha = 1.0;
+        self->_btnConfirm.alpha = 0.0;
+        self->_btnCancle.alpha = 0.0;
+        self->_captureView.progress = 0.0;
+        [self->_safeArea layoutIfNeeded];
+    } completion:^(BOOL finished) {
     }];
 }
 
+-(void)completeView{
+    self.previewLayer.hidden = YES;
+    _btnChangeCamera.hidden = YES;
+    _btnBack.hidden = YES;
+    _recognizerFocusing.enabled = NO;
+    [self updateSafeAreaConstraintsWithComplete:YES];
+    [UIView animateWithDuration:0.25 animations:^{
+        self->_captureView.alpha = 0.0;
+        self->_btnConfirm.alpha = 1.0;
+        self->_btnCancle.alpha = 1.0;
+        [self->_safeArea layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self->_captureView.progress = 0.0;
+    }];
+}
+
+- (void)recodingView {
+    _btnChangeCamera.hidden = YES;
+    _btnBack.hidden = YES;
+}
+
+// 录制
 -(void)beginRecode{
-    AVCaptureConnection *connection = [self.captureMovieFileOutput connectionWithMediaType:AVMediaTypeAudio];
     if (![self.captureMovieFileOutput isRecording]) {
-        if ([[UIDevice currentDevice] isMultitaskingSupported]) {
-            self.backgroundTaskIdentifier = [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:^{
-            }];
-        }
-        connection.videoOrientation = [self.previewLayer connection].videoOrientation;
+        [self recodingView];
+        AVCaptureConnection * captureCollection = [self.captureMovieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+        captureCollection.videoMirrored = [self.captureDeviceInput device].position == AVCaptureDevicePositionFront;
         NSTimeInterval interval = [[NSDate date] timeIntervalSince1970];
         NSString *filePath = [NSTemporaryDirectory() stringByAppendingString:[NSString stringWithFormat:@"av%.0f.mov",interval]];
         [self.captureMovieFileOutput startRecordingToOutputFileURL:[NSURL fileURLWithPath:filePath] recordingDelegate:self];
+        [self startProgress];
+    }
+}
+
+- (void)endRecode {
+    [_captureMovieFileOutput stopRecording];
+    [self endProgress];
+}
+
+-(void)recodeSuccess:(NSURL*)videoURL{
+    _completedVideoUrl = videoURL;
+    AVURLAsset *asset = [AVURLAsset assetWithURL:videoURL];
+    CMTime  time = [asset duration];
+    float duration =  (float)time.value / time.timescale;
+    if (duration < _minDuration) {
+        if ([_delegate respondsToSelector:@selector(recordLessMinDuration)] ) {
+            [_delegate recordLessMinDuration];
+        }
+        [self resetView];
+    }else {
+        if ([_delegate respondsToSelector:@selector(recodeVideoComplete:)] ) {
+            [_delegate recodeVideoComplete:videoURL];
+        }
+        if (!self.player) {
+            self.player = [[HAVPlayer alloc] initWithFrame:self.previewBg.bounds withShowInView:self.previewBg url:videoURL];
+        } else {
+            if (videoURL) {
+                self.player.videoUrl = videoURL;
+                self.player.hidden = NO;
+            }
+        }
+        [self completeView];
     }
 }
 
@@ -378,8 +480,8 @@ API_AVAILABLE(ios(10.0))
         [self.session addInput:toChangeDeviceInput];
         self.captureDeviceInput = toChangeDeviceInput;
     }
-    //提交会话配置
     [self.session commitConfiguration];
+    //提交会话配置
     //1 创建动画对象
     CATransition *trans = [CATransition animation];
     //2 设置动画属性
@@ -398,14 +500,14 @@ API_AVAILABLE(ios(10.0))
     if (!_effectView) {
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
         _effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        _effectView.frame = _priviewBg.bounds;
+        _effectView.frame = _previewBg.bounds;
     }
     return _effectView;
 }
 #pragma mark --CAAnimationDelegate--
 
 - (void)animationDidStart:(CAAnimation *)anim{
-    [self.priviewBg addSubview:self.effectView];
+    [self.previewBg addSubview:self.effectView];
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
@@ -438,56 +540,14 @@ API_AVAILABLE(ios(10.0))
         // Fallback on earlier versions
     }
     UIImage *image = [[UIImage alloc]initWithData:imgDate];
-    [self takePictureSuccess:image];
+    [self shootSuccess:image];
 }
 
 - (void)captureOutput:(AVCapturePhotoOutput *)output didFinishProcessingPhotoSampleBuffer:(nullable CMSampleBufferRef)photoSampleBuffer previewPhotoSampleBuffer:(nullable CMSampleBufferRef)previewPhotoSampleBuffer resolvedSettings:(AVCaptureResolvedPhotoSettings *)resolvedSettings bracketSettings:(nullable AVCaptureBracketedStillImageSettings *)bracketSettings error:(nullable NSError *)error API_DEPRECATED("Use -captureOutput:didFinishProcessingPhoto:error: instead.", ios(10.0, 11.0)){
-    
-    UIImage *image = [self imageConvert:photoSampleBuffer];
-    [self takePictureSuccess:image];
+    UIImage *image = [UIImage imageWithSampleBuffer:photoSampleBuffer];
+    [self shootSuccess:image];
 }
 
-//CMSampleBufferRef=>UIImage
-- (UIImage *)imageConvert:(CMSampleBufferRef)sampleBuffer
-{
-    
-    // 为媒体数据设置一个CMSampleBuffer的Core Video图像缓存对象
-    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    // 锁定pixel buffer的基地址
-    CVPixelBufferLockBaseAddress(imageBuffer, 0);
-    
-    // 得到pixel buffer的基地址
-    void *baseAddress = CVPixelBufferGetBaseAddress(imageBuffer);
-    
-    // 得到pixel buffer的行字节数
-    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-    // 得到pixel buffer的宽和高
-    size_t width = CVPixelBufferGetWidth(imageBuffer);
-    size_t height = CVPixelBufferGetHeight(imageBuffer);
-    
-    // 创建一个依赖于设备的RGB颜色空间
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    
-    // 用抽样缓存的数据创建一个位图格式的图形上下文（graphics context）对象
-    CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8,
-                                                 bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    // 根据这个位图context中的像素数据创建一个Quartz image对象
-    CGImageRef quartzImage = CGBitmapContextCreateImage(context);
-    // 解锁pixel buffer
-    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
-    
-    // 释放context和颜色空间
-    CGContextRelease(context);
-    CGColorSpaceRelease(colorSpace);
-    
-    // 用Quartz image创建一个UIImage对象image
-    UIImage *image = [UIImage imageWithCGImage:quartzImage];
-    
-    // 释放Quartz image对象
-    CGImageRelease(quartzImage);
-    
-    return (image);
-}
 
 #pragma mark --AVCaptureFileOutputRecordingDelegate--
 -(void)captureOutput:(AVCaptureFileOutput *)output didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray<AVCaptureConnection *> *)connections{
@@ -495,63 +555,36 @@ API_AVAILABLE(ios(10.0))
 }
 
 -(void)captureOutput:(AVCaptureFileOutput *)output didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray<AVCaptureConnection *> *)connections error:(NSError *)error{
-    //[self saveToAsset:outputFileURL];
-    [self takeVideoSuccess:outputFileURL];
-   
+    [self recodeSuccess:outputFileURL];
 }
 
--(void)saveToAsset:(NSURL *)localURL{
-    WS(weakSelf);
-    [SavaFileALbumUtil saveFilePaths:@[localURL] forVc:self complete:^(NSArray<PHAsset *> * _Nonnull result) {
-        [weakSelf.delegate completeWithAsset:result[0] image:nil videoPath:localURL];
-    }];
-}
-
--(void)saveImageToAsset:(UIImage*)image{
-    WS(weakSelf);
-    [SavaFileALbumUtil saveImages:@[image] forVc:self complete:^(NSArray<PHAsset *> * _Nonnull result) {
-        [weakSelf.delegate completeWithAsset:result[0] image:image videoPath:nil];
-    }];
-}
-
-/**
- *  改变设备属性的统一操作方法
- *
- *  @param propertyChange 属性改变操作
- */
--(void)changeDeviceProperty:(PropertyChangeBlock)propertyChange{
-    AVCaptureDevice *captureDevice= [self.captureDeviceInput device];
-    NSError *error;
-    //注意改变设备属性前一定要首先调用lockForConfiguration:调用完之后使用unlockForConfiguration方法解锁
-    if ([captureDevice lockForConfiguration:&error]) {
-        //自动白平衡
-        if ([captureDevice isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
-            [captureDevice setWhiteBalanceMode:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance];
-        }
-        //自动根据环境条件开启闪光灯
-        if ([captureDevice isFlashModeSupported:AVCaptureFlashModeAuto]) {
-            [captureDevice setFlashMode:AVCaptureFlashModeAuto];
-        }
-        
-        propertyChange(captureDevice);
-        [captureDevice unlockForConfiguration];
-    }else{
-        NSLog(@"设置设备属性过程发生错误，错误信息：%@",error.localizedDescription);
-    }
-}
-
+#pragma mark -- 保存 ---
+//-(void)saveToAsset:(NSURL *)localURL{
+//    WS(weakSelf);
+//    [SavaFileALbumUtil saveFilePaths:@[localURL] forVc:self complete:^(NSArray<PHAsset *> * _Nonnull result) {
+//        [weakSelf.delegate completeWithAsset:result[0] image:nil videoPath:localURL];
+//    }];
+//}
+//
+//-(void)saveImageToAsset:(UIImage*)image{
+//    WS(weakSelf);
+//    [SavaFileALbumUtil saveImages:@[image] forVc:self complete:^(NSArray<PHAsset *> * _Nonnull result) {
+//        [weakSelf.delegate completeWithAsset:result[0] image:image videoPath:nil];
+//    }];
+//}
 
 #pragma mark --对焦--
 
 -(void)addGenstureRecognizer{
     UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapScreen:)];
+    tapGesture.delegate = self;
     [self.view addGestureRecognizer:tapGesture];
     _recognizerFocusing = tapGesture;
 }
 
 -(void)tapScreen:(UITapGestureRecognizer *)tapGesture{
     if ([self.session isRunning]) {
-        CGPoint point= [tapGesture locationInView:self.view];
+        CGPoint point= [tapGesture locationInView:_previewBg];
         //将UI坐标转化为摄像头坐标
         CGPoint cameraPoint= [self.previewLayer captureDevicePointOfInterestForPoint:point];
         [self setFocusCursorWithPoint:point];
@@ -603,6 +636,69 @@ API_AVAILABLE(ios(10.0))
             [captureDevice setFocusMode:focusMode];
         }
     }];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if (_captureView.superview &&[touch.view isDescendantOfView:_captureView] ) {
+        return NO;
+    }
+    return YES;
+}
+
+/**
+ *  改变设备属性的统一操作方法
+ *
+ *  @param propertyChange 属性改变操作
+ */
+-(void)changeDeviceProperty:(PropertyChangeBlock)propertyChange{
+    AVCaptureDevice *captureDevice= [self.captureDeviceInput device];
+    NSError *error;
+    //注意改变设备属性前一定要首先调用lockForConfiguration:调用完之后使用unlockForConfiguration方法解锁
+    if ([captureDevice lockForConfiguration:&error]) {
+        //自动白平衡
+        if ([captureDevice isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+            [captureDevice setWhiteBalanceMode:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance];
+        }
+        //自动根据环境条件开启闪光灯
+        if ([captureDevice isFlashModeSupported:AVCaptureFlashModeAuto]) {
+            [captureDevice setFlashMode:AVCaptureFlashModeAuto];
+        }
+        
+        propertyChange(captureDevice);
+        [captureDevice unlockForConfiguration];
+    }else{
+        NSLog(@"设置设备属性过程发生错误，错误信息：%@",error.localizedDescription);
+    }
+}
+
+// 定时器
+- (CADisplayLink *)displayLink {
+    if (!_displayLink) {
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(recodeProgress:)];
+    }
+    return _displayLink;
+}
+
+- (void)startProgress{
+    _beginTime = CACurrentMediaTime();
+    self.displayLink.paused = NO;
+    [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+- (void)endProgress{
+    _displayLink.paused = YES;
+    [_displayLink invalidate];
+    _displayLink = nil;
+}
+
+- (void)recodeProgress:(CADisplayLink *)displayLink {
+    CFTimeInterval interval =  CACurrentMediaTime();
+    double duration = interval - _beginTime;
+    if (_maxDuration <= duration) {
+        [self endRecode];
+    }else {
+        _captureView.progress = duration/_maxDuration;
+    }
 }
 
 @end

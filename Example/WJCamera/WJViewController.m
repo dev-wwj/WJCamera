@@ -27,21 +27,23 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)start:(id)sender {
-    WJCameraConfig *config = [WJCameraConfig config];
-    config.Max_time = 10; //Default 15 s
-    WJCameraController *wjc =[WJCameraController buildWithConfig:config];
-    wjc.delegate = self;
+   
+    WJCameraController *wjc =[[WJCameraController alloc]initWithTakeMode:ALL delegate:self];
+    wjc.modalPresentationStyle = UIModalPresentationOverFullScreen;
     [self presentViewController:wjc animated:YES completion:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [self start:nil];
 }
 
--(void)completeWithAsset:(PHAsset*)asset image:(UIImage *)image videoPath:(NSURL*)videoPath{
-    NSLog(@"asset---%@",asset);
-    NSLog(@"image---%@",image);
-    NSLog(@"videoPath---%@",videoPath);
+- (void)recodeVideoComplete:(NSURL * _Nullable)videoPath {
+    NSLog(@"%@", videoPath);
+}
+
+- (void)takePhotoComplete:(UIImage * _Nullable)image {
+    NSLog(@"%@", image);
 }
 
 

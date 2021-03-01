@@ -94,7 +94,7 @@
 // 圆形
 - (UIBezierPath *)circlePath
 {
-    return [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, VIEW_W(self), VIEW_H(self)) cornerRadius:VIEW_W(self)/2];
+    return [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)) cornerRadius:CGRectGetWidth(self.frame)/2];
 }
 
 

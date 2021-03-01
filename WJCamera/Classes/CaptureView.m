@@ -7,141 +7,168 @@
 //
 
 #import "CaptureView.h"
-#import "WJUtilDefine.h"
+
+#define Width_Progress 6
+@interface CaptureView()
+
+@property (strong, nonatomic) CAShapeLayer *bgLayer;
+@property (strong, nonatomic) CAShapeLayer *ringLayer;
+@property (strong, nonatomic) CAShapeLayer *centerLayer;
+@end
 
 @implementation CaptureView
 
--(instancetype)init{
+
+- (instancetype)init{
     self = [super init];
     if (self) {
+        [self setupUI];
     }
     return self;
 }
 
--(instancetype)initWithCoder:(NSCoder *)aDecoder{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
+- (void)setProgress:(CGFloat)progress{
+    _progress = progress;
+    self.ringLayer.strokeEnd = _progress;
+}
+
+- (void)layoutSubviews {
+    [self ringLayer];
+    self.centerLayer.path = [self ovalInRectPath].CGPath;
+}
+
+- (CAShapeLayer *)bgLayer {
+    if (!_bgLayer) {
+        _bgLayer = [CAShapeLayer layer];
+        _bgLayer.frame = self.bounds;
+        _bgLayer.fillColor = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
+        _bgLayer.path = [UIBezierPath bezierPathWithOvalInRect:self.bounds].CGPath;
+        [self.layer addSublayer:_bgLayer];
     }
-    return self;
+    return _bgLayer;
 }
 
--(instancetype)initWithFrame:(CGRect)frame{
-    self = [super initWithFrame:frame];
-    if (self) {
+- (CAShapeLayer *)ringLayer {
+    if (!_ringLayer) {
+        _ringLayer = [CAShapeLayer layer];
+        CGFloat width = CGRectGetWidth(self.bounds) -Width_Progress;
+        CGRect rect = CGRectMake(Width_Progress/2, Width_Progress/2, width, width);
+        _ringLayer.frame = rect;
+        _ringLayer.fillColor = UIColor.clearColor.CGColor;
+        _ringLayer.strokeColor = _progressColor.CGColor;
+        _ringLayer.lineWidth = Width_Progress;
+        _ringLayer.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, width, width)].CGPath;
+        _ringLayer.strokeStart = 0.0;
+        _ringLayer.strokeEnd = 0.0;
+        [self.bgLayer addSublayer:_ringLayer];
     }
-    return self;
+    return _ringLayer;
 }
 
--(void)setMax_time:(NSInteger)Max_time{
-    if (_Max_time != Max_time) {
-        _Max_time = Max_time;
-        _progerssView.timeMax = _Max_time;
+- (CAShapeLayer *)centerLayer {
+    if (!_centerLayer) {
+        _centerLayer = [CAShapeLayer layer];
+        _centerLayer.frame = self.bounds;
+        _centerLayer.fillColor = UIColor.whiteColor.CGColor;
+        [self.layer addSublayer:_centerLayer];
     }
+    return _centerLayer;
 }
 
--(void)setTakeMode:(CAMERA_TAKE_MODE)takeMode{
-    if (_takeMode != takeMode) {
-        _takeMode = takeMode;
-        switch (takeMode) {
-            case ALL:
-               [self modeAll];
-                break;
-            case PHOTO:
-                [self modePhoto];
-                break;
-            case VIDOE:
-                [self modeVideo];
-                break;
-            default:
-                break;
-        }
-    }
+- (void)setupUI {
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    self.transform = CGAffineTransformRotate(transform, -M_PI/2);
+    [self addTarget:self action:@selector(touchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    longPress.minimumPressDuration = 0.5; //定义按的时间
+    [self addGestureRecognizer:longPress];
 }
 
--(void)modeAll{
-    [self addSubview:self.progerssView];
-    [self addSubview:self.captureButton];
-    [_captureButton addGestureRecognizer:self.longPress];
-    [self btnAddTarget];
-}
-
--(void)modePhoto{
-    [self addSubview:self.captureButton];
-}
-
--(void)modeVideo{
-    [self addSubview:self.progerssView];
-    [self addSubview:self.captureButton];
-    [_captureButton addGestureRecognizer:self.longPress];
-}
-
--(WJProgressView*)progerssView{
-    if (!_progerssView) {
-        _progerssView = [[WJProgressView alloc] initWithFrame:self.bounds];
-    }
-    return _progerssView;
-}
-
--(WJShootButton *)captureButton{
-    if (!_captureButton) {
-        _captureButton = [[WJShootButton alloc]initWithFrame:CGRectMake(0, 0, 60, 60 )];
-        _captureButton.center = CGPointMake(VIEW_W(self)/2, VIEW_H(self)/2);
-        _captureButton.fillLayer.fillColor = UIColor.redColor.CGColor;
-    }
-    return _captureButton;
-}
-
--(UILongPressGestureRecognizer *)longPress{
-    if (!_longPress) {
-        _longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressForShoot:)];
-        if (_takeMode == VIDOE) {
-            _longPress.minimumPressDuration = 0.0;
-        }else{
-            _longPress.minimumPressDuration = 0.5; //定义按的时间
-        }
-    }
-    return _longPress;
-}
-
--(void)btnAddTarget{
-    [_captureButton addTarget:self action:@selector(takeShoot:) forControlEvents:UIControlEventTouchUpInside];
-}
-
--(void)takeShoot:(id)sender{
+-(void)touchUpInside:(id)sender{
     if (_block) {
-        _block(CAPTURE_TAKE_PIC);
+        _block(Tap);
     }
 }
 
--(void)pressForShoot:(UILongPressGestureRecognizer *)recognizer{
-    //拍摄时移除点击target ；只响应longPress；
-    [_captureButton removeTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+-(void)longPress:(UILongPressGestureRecognizer *)recognizer{
     if (recognizer.state == UIGestureRecognizerStateBegan) {
-        NSLog(@"%@",@"press_begin");
-        [self.progerssView startAnimation];
-        _isEndTime = NO;
-        [self performSelector:@selector(endOfTimeRecord) withObject:nil afterDelay:_Max_time]; // 最大录制时间到后结束
         if (_block) {
-            _block(CAPTURE_RECORD_START);
+            _block(LongPress);
         }
+        [self.bgLayer addAnimation:[self enlargedAnimation] forKey:@"transform"];
     }else if(recognizer.state == UIGestureRecognizerStateEnded){
-         NSLog(@"%@",@"press_end");
-        if (_isEndTime) {
-            return;
-        }
-        [self.progerssView endAnimation];
         if (_block) {
-            _block(CAPTURE_RECORD_END);
+            _block(EndLongPress);
         }
+        [self.centerLayer addAnimation:[self centerAnimationTouchend] forKey:@"animate"];
+        [self.bgLayer removeAnimationForKey:@"transform"];
     }
 }
 
--(void)endOfTimeRecord{
-    _isEndTime = YES;
-    [self.progerssView endAnimation];
-    if (_block) {
-        _block(CAPTURE_RECORD_END);
-    }
+// 圆形
+- (UIBezierPath *)ovalInRectPath
+{
+    double width = CGRectGetWidth(self.bounds) - 30;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(15, 15, width, width) cornerRadius:width/2];
+    return path;
+}
+
+// 圆角矩形
+- (UIBezierPath *)rounderRectPath
+{
+    double width = CGRectGetWidth(self.bounds) - 50;
+    return [UIBezierPath bezierPathWithRoundedRect:CGRectMake(25, 25, width, width) cornerRadius:5];
+}
+
+
+- (CABasicAnimation *)centerAnimationTouchbegin
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
+    animation.duration = 0.2;
+    animation.fromValue = (__bridge id)(self.ovalInRectPath.CGPath);
+    animation.toValue = (__bridge id)(self.rounderRectPath.CGPath);
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    return animation;
+}
+
+- (CABasicAnimation *)centerAnimationTouchend
+{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
+    animation.duration = 0.2;
+    animation.fromValue = (__bridge id)(self.rounderRectPath.CGPath);
+    animation.toValue = (__bridge id)(self.ovalInRectPath.CGPath);
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    return animation;
+}
+
+// 放大
+- (CABasicAnimation*)enlargedAnimation {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.duration = 0.2;
+    animation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.2f, 1.2f, 1.0f)];
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    return animation;
+}
+
+- (CABasicAnimation*)recoverTransAnimation {
+    CABasicAnimation *animation = [self.bgLayer animationForKey:@"transform"];
+    animation.removedOnCompletion = YES;
+    return animation;
+}
+
+
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [super touchesBegan:touches withEvent:event];
+    [self.centerLayer addAnimation:[self centerAnimationTouchbegin] forKey:@"animate"];
+}
+
+-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [super touchesEnded:touches withEvent:event];
+    [self.centerLayer addAnimation:[self centerAnimationTouchend] forKey:@"animate"];
 }
 
 

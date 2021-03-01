@@ -23,7 +23,6 @@
 		0F9B3897292298E50DA96CE3D2E0C95F /* Specta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 382ECE1E22FEAEF61DE949EC923BD45B /* Specta.framework */; };
 		1091E87228DB44FC229DE4C68DF0807B /* EXPMatchers+FBSnapshotTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B68EC3A7D03997CA14E462F2B3EF9DF /* EXPMatchers+FBSnapshotTest.m */; };
 		10E99185BE7ADBCF12EEC9B8C6301F40 /* take_cancle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C2139C478BA50DDAAE7937BFA53DA39A /* take_cancle@3x.png */; };
-		119F5632A068985D8B30B8D812B2E015 /* SavaFileALbumUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 02348D978E0C3D10A36F222C23B9250C /* SavaFileALbumUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		11C38A3A98A4BBFB296D6D81AD4F7A80 /* UIImage+Diff.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F11E1AB406CC35F611331B587493940 /* UIImage+Diff.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		127DF51F52949A7C97BA8E010849C7B6 /* WJCameraController.h in Headers */ = {isa = PBXBuildFile; fileRef = 502989C7EE4B2EAEA36C29C4AA4511ED /* WJCameraController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		14419C2DD1F06DD4195D196B61091BC3 /* Expecta+Snapshots-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BBBB7162FB92992506A39CFB6BA8A8CA /* Expecta+Snapshots-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -76,7 +75,6 @@
 		541C45FA37E90B2022A66969D761950D /* focusing@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9201B9390D502C87E5AAA89DE5321826 /* focusing@1x.png */; };
 		598B0DEE75FE86FCD68BB2CEF7F7AE59 /* SpectaDSL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE0219796C82990A1A1AD5FD69FCE279 /* SpectaDSL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AC5FF2760255680235313B56A574609 /* EXPMatchers+beInstanceOf.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C42C62404B54A94E9016D3F3A5FB993 /* EXPMatchers+beInstanceOf.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5ACAF9575A07BBBB66396E3A1B91615C /* SavaFileALbumUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F4C9874286AB7D79B738277B81F8FE /* SavaFileALbumUtil.m */; };
 		5C81C19AB676D2725664BF54A3B23AE5 /* EXPMatchers+raise.h in Headers */ = {isa = PBXBuildFile; fileRef = 278343CF0A96A77B9DE851D3BD33D276 /* EXPMatchers+raise.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5CC24282C53CF5E8521DF81EA5F93AFC /* FBSnapshotTestCase-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 89B137BE0A552304A58E6550A8C98A30 /* FBSnapshotTestCase-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5F2093C84108485354F990862BB956B4 /* CaptureView.h in Headers */ = {isa = PBXBuildFile; fileRef = B7D4495E2D9D120C1EC001B214CC8169 /* CaptureView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -106,6 +104,8 @@
 		7BDD51CFBFDE960C7BD03BE1A173DD56 /* Expecta+Snapshots-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A31C20C3D44716800D7336A9F6BE85 /* Expecta+Snapshots-dummy.m */; };
 		7DD0716C039D0359D65D635AE137AEB7 /* SPTExampleGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EB7B3F81BC905093A26C7C25A0E6545 /* SPTExampleGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7E3411ABB55AA7FFFBB66752E245507D /* EXPDoubleTuple.h in Headers */ = {isa = PBXBuildFile; fileRef = 014C08BC34849C2B92914F4F4AB905D6 /* EXPDoubleTuple.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FC8D81225E3A3A20026FCF4 /* UIButton+Enlarge.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8D81025E3A3A20026FCF4 /* UIButton+Enlarge.h */; };
+		7FC8D81325E3A3A20026FCF4 /* UIButton+Enlarge.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8D81125E3A3A20026FCF4 /* UIButton+Enlarge.m */; };
 		817F63FAA370CBA0F7F99BADDCD42276 /* EXPMatchers+endWith.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A6D977E48C65B427EA302F293CB2251 /* EXPMatchers+endWith.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81F97D3CB06D6EC5BD5485703BECC0E5 /* EXPMatchers+respondTo.h in Headers */ = {isa = PBXBuildFile; fileRef = E7B523419939F47A2908991200E73FAF /* EXPMatchers+respondTo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87C66C98C83843E5518F594D9D58012E /* EXPFloatTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F65E1457F4121391AB9C29634E857E4 /* EXPFloatTuple.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -118,7 +118,6 @@
 		8F87A681A6FA02DEEDEA5D3BEA4D443B /* EXPMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 238ABC4D3B06585C402F494DDF94DFDE /* EXPMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F8F2A68A19C93EC807B56ABA30E6D15 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90BBB88663EA20F00BEA276080490EEE /* Foundation.framework */; };
 		949BBE8BFF9972557B50551503831B6C /* EXPMatchers+endWith.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC7A9325D934DEAF4E509CD053CBA7F /* EXPMatchers+endWith.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		94F0198C1F842CB2D73F2111868DCA70 /* WJShootButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F15F5DBBA11F86B76C5C84AE4311ED /* WJShootButton.m */; };
 		9693107723AB9A3C5532BC726E9A0E2C /* EXPMatchers+conformTo.h in Headers */ = {isa = PBXBuildFile; fileRef = C5C7590353900FA38AD732C871BC524C /* EXPMatchers+conformTo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9983DD0F297B27436B78902378EF8A6B /* SPTSharedExampleGroups.h in Headers */ = {isa = PBXBuildFile; fileRef = 87E375A9819F95D66C415826F98C64E1 /* SPTSharedExampleGroups.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9B4583D9D8570574AE4621D35DE7F2F3 /* UIImage+Compare.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E66B298BBDF06F51A5E3DCC6B141EDB /* UIImage+Compare.m */; };
@@ -163,7 +162,6 @@
 		D5E48F161B0ED7FE9739E2F420699519 /* EXPMatchers+match.m in Sources */ = {isa = PBXBuildFile; fileRef = 1227BD6AA2342DA6B7FFCF65798CC4DF /* EXPMatchers+match.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D771F377854CFD69B984C487C1EEB3EE /* SpectaUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F35B526A6E9FE835F7B059530AF531 /* SpectaUtility.m */; };
 		DD706CE7325632E171DE5B06109108B8 /* take_confirm@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1427F8BAC885ECE08A38B455687A8314 /* take_confirm@3x.png */; };
-		DE1E92F5E9AB12647C707499E63469A3 /* WJCameraConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = DF9D3DA8FADB913A9D8C42209266742C /* WJCameraConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DE9D0EB999F345C0DB7D0F6F5C377CD1 /* FBSnapshotTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2E8A9D24E131ECC2E1F7769DBA8700 /* FBSnapshotTestController.m */; };
 		DECA70EBFC6594D3D9940E09E8DDE2D3 /* EXPMatchers+beNil.m in Sources */ = {isa = PBXBuildFile; fileRef = E28C7FB3D0EEECD3A0B4FEFC685A5F2C /* EXPMatchers+beNil.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DF89541448D88DA798D07297F6BA65DF /* EXPMatchers+beLessThan.m in Sources */ = {isa = PBXBuildFile; fileRef = 213B3B010E6DED26B9CE1A88E031C326 /* EXPMatchers+beLessThan.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -182,8 +180,6 @@
 		F0957D05BFF5845B1591A80437720430 /* EXPMatchers+beTruthy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD745390EDA718736CE3C3757B061B7 /* EXPMatchers+beTruthy.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F6C96E7F2558FBE0CE1FDC01007566BA /* WJCamera-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D37589891E36F278B6FE7679F0CEA55 /* WJCamera-dummy.m */; };
 		F8F6E736E76CD2675B5BA8AD22D38C07 /* btn_video_flip_camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 107FB4F95553E7076E7B3A9CE9E4B71E /* btn_video_flip_camera@2x.png */; };
-		F99E1988C8957EA573C9B98AF5B25525 /* WJShootButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FC0C55D78B037072B68B08F0099FCAE /* WJShootButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FB4C82FCCA9C63147FCEFB418FBED5AA /* WJCameraConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 654982C876DB13BF36BA0B2CA0A26CE4 /* WJCameraConfig.m */; };
 		FC84F5B5657761DEA04DAA32473A5F80 /* EXPMatchers+beSupersetOf.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7050F9F0065B27D580C60562768D61 /* EXPMatchers+beSupersetOf.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FE452D155FF764D6C0AE098D4CCF9A3C /* EXPMatchers+beTruthy.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEF5CF2D6B79E2F32D2FDA019737F56 /* EXPMatchers+beTruthy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF3ED59D11C0C35D6835655C82B73B3D /* EXPUnsupportedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = C612EBFFFFEE8ADAEB32EA3484D82DDE /* EXPUnsupportedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -267,9 +263,8 @@
 		014C08BC34849C2B92914F4F4AB905D6 /* EXPDoubleTuple.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPDoubleTuple.h; path = Expecta/EXPDoubleTuple.h; sourceTree = "<group>"; };
 		01C6321F513BC4A65CB750B7587F0DE7 /* FBSnapshotTestCase-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FBSnapshotTestCase-prefix.pch"; sourceTree = "<group>"; };
 		0200392C9C5B6CC5278A4B24328FE97F /* Pods-WJCamera_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-WJCamera_Tests.modulemap"; sourceTree = "<group>"; };
-		02348D978E0C3D10A36F222C23B9250C /* SavaFileALbumUtil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SavaFileALbumUtil.h; path = WJCamera/Classes/SavaFileALbumUtil.h; sourceTree = "<group>"; };
 		03A9D131B07C8B0B9061DEE2F3C50CD9 /* NSBundle+WJLibrary.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+WJLibrary.m"; path = "WJCamera/Classes/NSBundle+WJLibrary.m"; sourceTree = "<group>"; };
-		04597EE0926DC6BCD688D68A1C9B3165 /* WJCamera.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = WJCamera.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		04597EE0926DC6BCD688D68A1C9B3165 /* WJCamera.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = WJCamera.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		0626F0D0A083B4EBF30218415425775E /* SPTExample.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SPTExample.m; path = Specta/Specta/SPTExample.m; sourceTree = "<group>"; };
 		0685705314E8504651CBC7D5DB750820 /* take_confirm@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "take_confirm@2x.png"; path = "WJCamera/Resources/take_confirm@2x.png"; sourceTree = "<group>"; };
 		08BECA7EB5552EB5421C792ACB73D7B6 /* SPTExampleGroup.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SPTExampleGroup.m; path = Specta/Specta/SPTExampleGroup.m; sourceTree = "<group>"; };
@@ -295,7 +290,7 @@
 		1FBB780A167616F97FAC08EC083B85BA /* EXPMatcherHelpers.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EXPMatcherHelpers.m; path = Expecta/Matchers/EXPMatcherHelpers.m; sourceTree = "<group>"; };
 		2081DB730AF5E50B17489EC172EC90CB /* Expecta+Snapshots.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Expecta+Snapshots.modulemap"; sourceTree = "<group>"; };
 		213B3B010E6DED26B9CE1A88E031C326 /* EXPMatchers+beLessThan.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beLessThan.m"; path = "Expecta/Matchers/EXPMatchers+beLessThan.m"; sourceTree = "<group>"; };
-		21E6F7B5ABAB5F35C67760917F4CB513 /* WJCamera.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = WJCamera.bundle; path = "WJCamera-WJCamera.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		21E6F7B5ABAB5F35C67760917F4CB513 /* WJCamera.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WJCamera.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		238ABC4D3B06585C402F494DDF94DFDE /* EXPMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPMatcher.h; path = Expecta/EXPMatcher.h; sourceTree = "<group>"; };
 		242F18422DBD824BE9A6497C89B02655 /* ExpectaSupport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ExpectaSupport.m; path = Expecta/ExpectaSupport.m; sourceTree = "<group>"; };
 		24DB39E2D20E9FA88520B89403F10E8C /* WJCamera-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WJCamera-umbrella.h"; sourceTree = "<group>"; };
@@ -307,7 +302,6 @@
 		2B93E8DD810C990E572A99310C37CB74 /* Expecta.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Expecta.modulemap; sourceTree = "<group>"; };
 		2B9804F30795C66669D716BB4C171308 /* EXPMatchers+beKindOf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beKindOf.h"; path = "Expecta/Matchers/EXPMatchers+beKindOf.h"; sourceTree = "<group>"; };
 		2F11E1AB406CC35F611331B587493940 /* UIImage+Diff.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Diff.h"; path = "FBSnapshotTestCase/Categories/UIImage+Diff.h"; sourceTree = "<group>"; };
-		2FC0C55D78B037072B68B08F0099FCAE /* WJShootButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WJShootButton.h; path = WJCamera/Classes/WJShootButton.h; sourceTree = "<group>"; };
 		305F9DC2DB8B23950AD4F4B46B7E9D63 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		312095F7F5375734EB593736593A782F /* XCTestCase+Specta.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "XCTestCase+Specta.m"; path = "Specta/Specta/XCTestCase+Specta.m"; sourceTree = "<group>"; };
 		32B80D92204FA57FEDD0BC46F4FCAC17 /* SPTTestSuite.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SPTTestSuite.m; path = Specta/Specta/SPTTestSuite.m; sourceTree = "<group>"; };
@@ -325,7 +319,7 @@
 		427FA5BE296D4F567B569CF3C7814077 /* NSValue+Expecta.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSValue+Expecta.h"; path = "Expecta/NSValue+Expecta.h"; sourceTree = "<group>"; };
 		42C999B828B43A505002E151EDC2501C /* EXPMatchers+raiseWithReason.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+raiseWithReason.m"; path = "Expecta/Matchers/EXPMatchers+raiseWithReason.m"; sourceTree = "<group>"; };
 		43C12E1FEA93FA0D2E27971FB68657E4 /* WJCamera.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WJCamera.modulemap; sourceTree = "<group>"; };
-		4545A7FFC16562F6D873D998D58393C5 /* WJCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = WJCamera.framework; path = WJCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4545A7FFC16562F6D873D998D58393C5 /* WJCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WJCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		45B3A814AAC56FF8C51B5B7FBBCB8186 /* Pods-WJCamera_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-WJCamera_Example-dummy.m"; sourceTree = "<group>"; };
 		4717F1D3DC71B3B60E6BB90A6EC8AFEB /* SPTSpec.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SPTSpec.h; path = Specta/Specta/SPTSpec.h; sourceTree = "<group>"; };
 		498763C8DD39C05FF4588495F46EF930 /* Pods-WJCamera_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-WJCamera_Tests-dummy.m"; sourceTree = "<group>"; };
@@ -345,7 +339,7 @@
 		5A210C1A0541C52E74C078874A789A2B /* EXPDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPDefines.h; path = Expecta/EXPDefines.h; sourceTree = "<group>"; };
 		5A600F4C6C2A15345BB2759A7152B0AC /* SPTSharedExampleGroups.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SPTSharedExampleGroups.m; path = Specta/Specta/SPTSharedExampleGroups.m; sourceTree = "<group>"; };
 		5A7905E6CB8B115B3C8DE6AB27183B5C /* HAVPlayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HAVPlayer.m; path = WJCamera/Classes/HAVPlayer.m; sourceTree = "<group>"; };
-		5A8B165FDDD62B3827D32FEA8C104785 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		5A8B165FDDD62B3827D32FEA8C104785 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5B50B8210249E15F29B75720E4D58144 /* take_confirm@1x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "take_confirm@1x.png"; path = "WJCamera/Resources/take_confirm@1x.png"; sourceTree = "<group>"; };
 		5D5A94725C30AE08537B36D15093E292 /* UIApplication+StrictKeyWindow.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+StrictKeyWindow.m"; path = "FBSnapshotTestCase/Categories/UIApplication+StrictKeyWindow.m"; sourceTree = "<group>"; };
 		606E57AE548475D81383AB9CDF39707D /* Pods-WJCamera_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WJCamera_Tests-Info.plist"; sourceTree = "<group>"; };
@@ -353,10 +347,9 @@
 		624A4D877B0CBB2CE9DCFCE2BF0AB849 /* EXPMatchers+beFalsy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beFalsy.m"; path = "Expecta/Matchers/EXPMatchers+beFalsy.m"; sourceTree = "<group>"; };
 		62F98F1EF6CC5FE3F945313C5B0CAB11 /* Pods-WJCamera_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-WJCamera_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		63351D84955C1ADE15A55A695F776655 /* Specta-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Specta-dummy.m"; sourceTree = "<group>"; };
-		654982C876DB13BF36BA0B2CA0A26CE4 /* WJCameraConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = WJCameraConfig.m; path = WJCamera/Classes/WJCameraConfig.m; sourceTree = "<group>"; };
 		659D4D410D34050A3A4978C3148083D1 /* EXPMatchers+beGreaterThanOrEqualTo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beGreaterThanOrEqualTo.h"; path = "Expecta/Matchers/EXPMatchers+beGreaterThanOrEqualTo.h"; sourceTree = "<group>"; };
 		65A3F9059119E1A5287A88950D44F6D0 /* EXPMatchers+FBSnapshotTest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EXPMatchers+FBSnapshotTest.h"; sourceTree = "<group>"; };
-		68F0A26D6A8FE2622445B666D72A1B39 /* Expecta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Expecta.framework; path = Expecta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68F0A26D6A8FE2622445B666D72A1B39 /* Expecta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Expecta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AB709F279C7AFCF42B21DCC561B4D3E /* Expecta+Snapshots.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Expecta+Snapshots.xcconfig"; sourceTree = "<group>"; };
 		6D2D095482223C610A7573194B7D84F7 /* Pods-WJCamera_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-WJCamera_Example-umbrella.h"; sourceTree = "<group>"; };
 		6F02A4A05C9243956E997F1FC1B34065 /* UIImage+WJLibrary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+WJLibrary.h"; path = "WJCamera/Classes/UIImage+WJLibrary.h"; sourceTree = "<group>"; };
@@ -373,6 +366,8 @@
 		7BF7AC8457ED76CE6063B27CB6B87C41 /* Specta.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Specta.h; path = Specta/Specta/Specta.h; sourceTree = "<group>"; };
 		7D92F33BA3233412AD6C618F090E1D17 /* EXPMatchers+beCloseTo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beCloseTo.m"; path = "Expecta/Matchers/EXPMatchers+beCloseTo.m"; sourceTree = "<group>"; };
 		7F9D98F6E0144D0539A2803806A2659A /* UIImage+Snapshot.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Snapshot.m"; path = "FBSnapshotTestCase/Categories/UIImage+Snapshot.m"; sourceTree = "<group>"; };
+		7FC8D81025E3A3A20026FCF4 /* UIButton+Enlarge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+Enlarge.h"; sourceTree = "<group>"; };
+		7FC8D81125E3A3A20026FCF4 /* UIButton+Enlarge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Enlarge.m"; sourceTree = "<group>"; };
 		818F3E89D25B7229B741FAEED5F5C698 /* Expecta+Snapshots-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Expecta+Snapshots-prefix.pch"; sourceTree = "<group>"; };
 		81C135EEA5AB7FF47BC97AAC5D035E36 /* FBSnapshotTestCase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSnapshotTestCase.h; path = FBSnapshotTestCase/FBSnapshotTestCase.h; sourceTree = "<group>"; };
 		8495EBA773C0793C70EC159868494F42 /* NSValue+Expecta.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSValue+Expecta.m"; path = "Expecta/NSValue+Expecta.m"; sourceTree = "<group>"; };
@@ -384,7 +379,7 @@
 		8A1C96EDE287984A3DBEF26263F88130 /* SPTCompiledExample.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SPTCompiledExample.m; path = Specta/Specta/SPTCompiledExample.m; sourceTree = "<group>"; };
 		8B48451CA84B11F7E20406CEA1E1ADDD /* CaptureView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CaptureView.m; path = WJCamera/Classes/CaptureView.m; sourceTree = "<group>"; };
 		8D37589891E36F278B6FE7679F0CEA55 /* WJCamera-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "WJCamera-dummy.m"; sourceTree = "<group>"; };
-		8EC6B9E6FFC1AD2017E136368E896D11 /* Pods_WJCamera_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_WJCamera_Tests.framework; path = "Pods-WJCamera_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EC6B9E6FFC1AD2017E136368E896D11 /* Pods_WJCamera_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WJCamera_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7050F9F0065B27D580C60562768D61 /* EXPMatchers+beSupersetOf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beSupersetOf.h"; path = "Expecta/Matchers/EXPMatchers+beSupersetOf.h"; sourceTree = "<group>"; };
 		9094641D80EBA00FF13C924E6665C3DE /* Expecta-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Expecta-umbrella.h"; sourceTree = "<group>"; };
 		90BBB88663EA20F00BEA276080490EEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -393,23 +388,22 @@
 		9402DF91E07C91AB1AAFF7D12D0AEF20 /* EXPMatchers+postNotification.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+postNotification.m"; path = "Expecta/Matchers/EXPMatchers+postNotification.m"; sourceTree = "<group>"; };
 		965BDB3F27C732690D7D660739BC8A67 /* EXPUnsupportedObject.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EXPUnsupportedObject.m; path = Expecta/EXPUnsupportedObject.m; sourceTree = "<group>"; };
 		96F43693EC1FD1F4F6420282C4E7A582 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
-		9C0E522B2696425E70B307B9E8EE2EDC /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FBSnapshotTestCase.framework; path = FBSnapshotTestCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0E522B2696425E70B307B9E8EE2EDC /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FBSnapshotTestCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C42C62404B54A94E9016D3F3A5FB993 /* EXPMatchers+beInstanceOf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beInstanceOf.h"; path = "Expecta/Matchers/EXPMatchers+beInstanceOf.h"; sourceTree = "<group>"; };
 		9C9FC223AF78FBF071491B8656159AF6 /* Pods-WJCamera_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-WJCamera_Example-frameworks.sh"; sourceTree = "<group>"; };
 		9D55891303032F162532BEDD50AFAC3C /* UIImage+Compare.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Compare.h"; path = "FBSnapshotTestCase/Categories/UIImage+Compare.h"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DB79BFEC3979472A6FC3B08EB4E3509 /* focusing@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "focusing@2x.png"; path = "WJCamera/Resources/focusing@2x.png"; sourceTree = "<group>"; };
 		9E66B298BBDF06F51A5E3DCC6B141EDB /* UIImage+Compare.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Compare.m"; path = "FBSnapshotTestCase/Categories/UIImage+Compare.m"; sourceTree = "<group>"; };
 		A0B1E49AA1A818DDB616F554A0513A6F /* ExpectaObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ExpectaObject.h; path = Expecta/ExpectaObject.h; sourceTree = "<group>"; };
 		A37D65B02A9B61A6B9910AAAEC0821B2 /* UIApplication+StrictKeyWindow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIApplication+StrictKeyWindow.h"; path = "FBSnapshotTestCase/Categories/UIApplication+StrictKeyWindow.h"; sourceTree = "<group>"; };
 		A426A76460EFA9143F29AB185960DD18 /* EXPMatchers+respondTo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+respondTo.m"; path = "Expecta/Matchers/EXPMatchers+respondTo.m"; sourceTree = "<group>"; };
 		A44A17B551A37E7C6C3A62C0D4445613 /* focusing@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "focusing@3x.png"; path = "WJCamera/Resources/focusing@3x.png"; sourceTree = "<group>"; };
-		A4F15F5DBBA11F86B76C5C84AE4311ED /* WJShootButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = WJShootButton.m; path = WJCamera/Classes/WJShootButton.m; sourceTree = "<group>"; };
 		A59221FAAC94024DBCDBEB58F292798B /* FBSnapshotTestController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSnapshotTestController.h; path = FBSnapshotTestCase/FBSnapshotTestController.h; sourceTree = "<group>"; };
 		A65BADD6E2872C742D0C8F5F3C94C5B4 /* Pods-WJCamera_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WJCamera_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		AB66277A809C84A535DFD6DF0EE19E86 /* EXPMatchers+beIdenticalTo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beIdenticalTo.h"; path = "Expecta/Matchers/EXPMatchers+beIdenticalTo.h"; sourceTree = "<group>"; };
 		AC63D453307B30B7630049FAE070874E /* EXPMatchers+beGreaterThan.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beGreaterThan.m"; path = "Expecta/Matchers/EXPMatchers+beGreaterThan.m"; sourceTree = "<group>"; };
-		AEB9E0C5BF005F87A626E77D06DB460D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		AEB9E0C5BF005F87A626E77D06DB460D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		AF94BB1F0A47ECBE7BAC5925E50BEF7E /* ExpectaSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ExpectaSupport.h; path = Expecta/ExpectaSupport.h; sourceTree = "<group>"; };
 		B002E5C4179F9277388CB73F525D1D31 /* EXPMatchers+beInTheRangeOf.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beInTheRangeOf.m"; path = "Expecta/Matchers/EXPMatchers+beInTheRangeOf.m"; sourceTree = "<group>"; };
 		B23314A8421A2165422D07D2E1215E35 /* EXPMatchers+beCloseTo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beCloseTo.h"; path = "Expecta/Matchers/EXPMatchers+beCloseTo.h"; sourceTree = "<group>"; };
@@ -428,7 +422,7 @@
 		C187AF2EC51C2F40F2666A8B1E8C16D1 /* EXPMatchers+beNil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beNil.h"; path = "Expecta/Matchers/EXPMatchers+beNil.h"; sourceTree = "<group>"; };
 		C2139C478BA50DDAAE7937BFA53DA39A /* take_cancle@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "take_cancle@3x.png"; path = "WJCamera/Resources/take_cancle@3x.png"; sourceTree = "<group>"; };
 		C2A454124A139742EFB1F369C8B77F7A /* Pods-WJCamera_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WJCamera_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		C38CA60B4EAA0316F12F49EAB51FECE3 /* Pods_WJCamera_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_WJCamera_Example.framework; path = "Pods-WJCamera_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C38CA60B4EAA0316F12F49EAB51FECE3 /* Pods_WJCamera_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WJCamera_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5A024BC7BA5DB3B44372ACC01B7283A /* SPTCompiledExample.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SPTCompiledExample.h; path = Specta/Specta/SPTCompiledExample.h; sourceTree = "<group>"; };
 		C5C7590353900FA38AD732C871BC524C /* EXPMatchers+conformTo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+conformTo.h"; path = "Expecta/Matchers/EXPMatchers+conformTo.h"; sourceTree = "<group>"; };
 		C612EBFFFFEE8ADAEB32EA3484D82DDE /* EXPUnsupportedObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPUnsupportedObject.h; path = Expecta/EXPUnsupportedObject.h; sourceTree = "<group>"; };
@@ -445,15 +439,13 @@
 		D4D303A2E977EDA59240515C8BA48193 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FBSnapshotTestCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4F35B526A6E9FE835F7B059530AF531 /* SpectaUtility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SpectaUtility.m; path = Specta/Specta/SpectaUtility.m; sourceTree = "<group>"; };
 		D8390142947D101F7B42695AF5DF01FD /* EXPMatchers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPMatchers.h; path = Expecta/Matchers/EXPMatchers.h; sourceTree = "<group>"; };
-		D8F4C9874286AB7D79B738277B81F8FE /* SavaFileALbumUtil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SavaFileALbumUtil.m; path = WJCamera/Classes/SavaFileALbumUtil.m; sourceTree = "<group>"; };
 		DA31C8DAE65E9DF262BFBFDED66F3636 /* ResourceBundle-WJCamera-WJCamera-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-WJCamera-WJCamera-Info.plist"; sourceTree = "<group>"; };
-		DA7946552E4408B74CA1B825F3866677 /* Expecta_Snapshots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Expecta_Snapshots.framework; path = "Expecta+Snapshots.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA7946552E4408B74CA1B825F3866677 /* Expecta_Snapshots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Expecta_Snapshots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAE54B31D5B1015AFD3A3E375FDB6EE5 /* FBSnapshotTestCase-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FBSnapshotTestCase-dummy.m"; sourceTree = "<group>"; };
 		DB1F0E4D4E5A8057BB77BE95ACED4506 /* WJCamera.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WJCamera.xcconfig; sourceTree = "<group>"; };
 		DDD806EA3D55AD4B1CF132DE02F919C7 /* Specta-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Specta-umbrella.h"; sourceTree = "<group>"; };
 		DE067AEE65E8916A1F2ADE1A02E0B5E0 /* EXPMatchers+beSupersetOf.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beSupersetOf.m"; path = "Expecta/Matchers/EXPMatchers+beSupersetOf.m"; sourceTree = "<group>"; };
 		DF618FE6DB1F243F3DF9DC3BE9BE973A /* SpectaUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SpectaUtility.h; path = Specta/Specta/SpectaUtility.h; sourceTree = "<group>"; };
-		DF9D3DA8FADB913A9D8C42209266742C /* WJCameraConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WJCameraConfig.h; path = WJCamera/Classes/WJCameraConfig.h; sourceTree = "<group>"; };
 		E111808BC279BD8CB358C5DA859D7D39 /* Specta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Specta.xcconfig; sourceTree = "<group>"; };
 		E201278FFD03703C07602EED265F4632 /* EXPBlockDefinedMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXPBlockDefinedMatcher.h; path = Expecta/EXPBlockDefinedMatcher.h; sourceTree = "<group>"; };
 		E28C7FB3D0EEECD3A0B4FEFC685A5F2C /* EXPMatchers+beNil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beNil.m"; path = "Expecta/Matchers/EXPMatchers+beNil.m"; sourceTree = "<group>"; };
@@ -462,7 +454,7 @@
 		E7B523419939F47A2908991200E73FAF /* EXPMatchers+respondTo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+respondTo.h"; path = "Expecta/Matchers/EXPMatchers+respondTo.h"; sourceTree = "<group>"; };
 		E8713B1ED8D15C8A0523963755596AC6 /* ExpectaObject+FBSnapshotTest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ExpectaObject+FBSnapshotTest.m"; sourceTree = "<group>"; };
 		E88372CC52ED191232D700DA1E140295 /* EXPMatchers+postNotification.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+postNotification.h"; path = "Expecta/Matchers/EXPMatchers+postNotification.h"; sourceTree = "<group>"; };
-		ED059798E1ED449653341AF1D0BC1A59 /* Specta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Specta.framework; path = Specta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED059798E1ED449653341AF1D0BC1A59 /* Specta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Specta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE230E110259850C0FFB07E005AC95E3 /* EXPMatchers+beginWith.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beginWith.h"; path = "Expecta/Matchers/EXPMatchers+beginWith.h"; sourceTree = "<group>"; };
 		F1057396347BC99E48DB6DD1EF238BB0 /* WJCamera-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "WJCamera-Info.plist"; sourceTree = "<group>"; };
 		F3727C63E53B097F3D8B2C7307E30723 /* EXPMatchers+beLessThanOrEqualTo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beLessThanOrEqualTo.h"; path = "Expecta/Matchers/EXPMatchers+beLessThanOrEqualTo.h"; sourceTree = "<group>"; };
@@ -725,7 +717,6 @@
 				8495EBA773C0793C70EC159868494F42 /* NSValue+Expecta.m */,
 				4CD230B815643F866202BB9633409D47 /* Support Files */,
 			);
-			name = Expecta;
 			path = Expecta;
 			sourceTree = "<group>";
 		};
@@ -760,18 +751,14 @@
 				5A7905E6CB8B115B3C8DE6AB27183B5C /* HAVPlayer.m */,
 				FA682376BFFCF5B053A32BF4AD5C981C /* NSBundle+WJLibrary.h */,
 				03A9D131B07C8B0B9061DEE2F3C50CD9 /* NSBundle+WJLibrary.m */,
-				02348D978E0C3D10A36F222C23B9250C /* SavaFileALbumUtil.h */,
-				D8F4C9874286AB7D79B738277B81F8FE /* SavaFileALbumUtil.m */,
 				6F02A4A05C9243956E997F1FC1B34065 /* UIImage+WJLibrary.h */,
 				1E529444F8054CAE7FC2CE198212C30D /* UIImage+WJLibrary.m */,
-				DF9D3DA8FADB913A9D8C42209266742C /* WJCameraConfig.h */,
-				654982C876DB13BF36BA0B2CA0A26CE4 /* WJCameraConfig.m */,
+				7FC8D81025E3A3A20026FCF4 /* UIButton+Enlarge.h */,
+				7FC8D81125E3A3A20026FCF4 /* UIButton+Enlarge.m */,
 				502989C7EE4B2EAEA36C29C4AA4511ED /* WJCameraController.h */,
 				415CA094BD1F7FEBCC05AB0363FA42A0 /* WJCameraController.m */,
 				72D958D48672F0D99EB719E0F93685E3 /* WJProgressView.h */,
 				0BF52D8DE94EE22641C0F27004FB52B9 /* WJProgressView.m */,
-				2FC0C55D78B037072B68B08F0099FCAE /* WJShootButton.h */,
-				A4F15F5DBBA11F86B76C5C84AE4311ED /* WJShootButton.m */,
 				FF759702F75636687F0359E615E073BC /* WJUtilDefine.h */,
 				1FF885C1B965B2889310C7E32817F981 /* Pod */,
 				DBFF79990690B2D81898E792B01A41C2 /* Resources */,
@@ -790,7 +777,6 @@
 				2B68EC3A7D03997CA14E462F2B3EF9DF /* EXPMatchers+FBSnapshotTest.m */,
 				BBD75A7FE71E3BF4C7637A92E9D93C7B /* Support Files */,
 			);
-			name = "Expecta+Snapshots";
 			path = "Expecta+Snapshots";
 			sourceTree = "<group>";
 		};
@@ -841,7 +827,6 @@
 				312095F7F5375734EB593736593A782F /* XCTestCase+Specta.m */,
 				D7F94305F2E448488B0554AEC2D45C15 /* Support Files */,
 			);
-			name = Specta;
 			path = Specta;
 			sourceTree = "<group>";
 		};
@@ -861,7 +846,6 @@
 				EE20E99F7D23303401F483BA817D0692 /* Support Files */,
 				58AA396A534AACDF9A7C473CECB3ED0F /* SwiftSupport */,
 			);
-			name = FBSnapshotTestCase;
 			path = FBSnapshotTestCase;
 			sourceTree = "<group>";
 		};
@@ -1087,16 +1071,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FC8D81225E3A3A20026FCF4 /* UIButton+Enlarge.h in Headers */,
 				5F2093C84108485354F990862BB956B4 /* CaptureView.h in Headers */,
 				ED097BB385741D13FBB8BE10581C4754 /* HAVPlayer.h in Headers */,
 				21800F27556A4D444411031E89967923 /* NSBundle+WJLibrary.h in Headers */,
-				119F5632A068985D8B30B8D812B2E015 /* SavaFileALbumUtil.h in Headers */,
 				E4502D492696A7D983C82A1C476233DF /* UIImage+WJLibrary.h in Headers */,
 				B2D42FA6569273209FE03411EC954F1A /* WJCamera-umbrella.h in Headers */,
-				DE1E92F5E9AB12647C707499E63469A3 /* WJCameraConfig.h in Headers */,
 				127DF51F52949A7C97BA8E010849C7B6 /* WJCameraController.h in Headers */,
 				BC2ECB0D754FE4FB27F25A8C9B9A6CBB /* WJProgressView.h in Headers */,
-				F99E1988C8957EA573C9B98AF5B25525 /* WJShootButton.h in Headers */,
 				2189A23AE2F0176FCF98BEED8BF2A7CB /* WJUtilDefine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1271,6 +1253,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
@@ -1462,15 +1445,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				467FD9C445D0710CADEAB3FF8E2BDBC9 /* CaptureView.m in Sources */,
+				7FC8D81325E3A3A20026FCF4 /* UIButton+Enlarge.m in Sources */,
 				7357FCA49663FED9272C89523DC37179 /* HAVPlayer.m in Sources */,
 				89287FCFF0D11AABC6A86654F2D37D29 /* NSBundle+WJLibrary.m in Sources */,
-				5ACAF9575A07BBBB66396E3A1B91615C /* SavaFileALbumUtil.m in Sources */,
 				004BAE749F6075F50CC0AE559511E4FE /* UIImage+WJLibrary.m in Sources */,
 				F6C96E7F2558FBE0CE1FDC01007566BA /* WJCamera-dummy.m in Sources */,
-				FB4C82FCCA9C63147FCEFB418FBED5AA /* WJCameraConfig.m in Sources */,
 				1B973491E3FE33E2D0B7AEB3634C3764 /* WJCameraController.m in Sources */,
 				D2D57FB872C64337066ADC20D2F59BB7 /* WJProgressView.m in Sources */,
-				94F0198C1F842CB2D73F2111868DCA70 /* WJShootButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1657,8 +1638,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};

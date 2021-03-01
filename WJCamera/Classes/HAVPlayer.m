@@ -47,14 +47,13 @@
     if (!_player) {
         _player = [AVPlayer playerWithPlayerItem:[self getAVPlayerItem]];
         [self addAVPlayerNtf:_player.currentItem];
-        
     }
     
     return _player;
 }
 
 - (AVPlayerItem *)getAVPlayerItem {
-    AVPlayerItem *playerItem=[AVPlayerItem playerItemWithURL:self.videoUrl];
+    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:self.videoUrl];
     return playerItem;
 }
 
@@ -108,16 +107,12 @@
     AVPlayerItem *playerItem = object;
     if ([keyPath isEqualToString:@"status"]) {
         AVPlayerStatus status= [[change objectForKey:@"new"] intValue];
-        if(status==AVPlayerStatusReadyToPlay){
-            NSLog(@"正在播放...，视频总长度:%.2f",CMTimeGetSeconds(playerItem.duration));
-        }
     }else if([keyPath isEqualToString:@"loadedTimeRanges"]){
         NSArray *array=playerItem.loadedTimeRanges;
         CMTimeRange timeRange = [array.firstObject CMTimeRangeValue];//本次缓冲时间范围
         float startSeconds = CMTimeGetSeconds(timeRange.start);
         float durationSeconds = CMTimeGetSeconds(timeRange.duration);
         NSTimeInterval totalBuffer = startSeconds + durationSeconds;//缓冲总长度
-        NSLog(@"共缓冲：%.2f",totalBuffer);
     }
 }
 

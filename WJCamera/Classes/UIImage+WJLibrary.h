@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Photos/Photos.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (UIImage *)wj_imageNamed:(NSString *)name inBundle:(NSBundle *)bundle ;
 
+//CMSampleBufferRef=>UIImage
++ (UIImage *)imageWithSampleBuffer:(CMSampleBufferRef)sampleBuffer;
 @end
 
 NS_ASSUME_NONNULL_END
