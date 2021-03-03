@@ -21,25 +21,7 @@ Privacy - Photo Library Usage Description
 
 2、使用
 
-#import "WJCameraController.h"
-
-//创建
-
- WJCameraConfig *config = [WJCameraConfig config];
- 
- config.Max_time = 10; // 录制时长 Default 15 s
- 
- WJCameraController *wjc =[WJCameraController buildWithConfig:config];
- 
- wjc.delegate = self;
- 
- [self presentViewController:wjc animated:YES completion:nil];
-
-
-//通过delegate，得到拍摄的照片或视频.
-
--(void)completeWithAsset:(PHAsset*)asset image:(UIImage *)image videoPath:(NSURL*)videoPath{
-}
+参见示例
 
 ## Requirements
 
