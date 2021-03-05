@@ -8,6 +8,8 @@
 iOS相机
 点击拍照，长按录像
 
+![效果图](https://img-blog.csdnimg.cn/20210302101737241.gif)
+
 ## Example
 
 1、必要权限申请
