@@ -19,8 +19,6 @@ Privacy - Camera Usage Description
 
 Privacy - Microphone Usage Description
 
-Privacy - Photo Library Usage Description
-
 2、使用
 
 参见示例
