@@ -10,7 +10,7 @@ PODS:
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
   - Specta (1.0.7)
-  - WJCamera (1.0.0)
+  - WJCamera (1.0.1)
 
 DEPENDENCIES:
   - Expecta
@@ -35,8 +35,8 @@ SPEC CHECKSUMS:
   "Expecta+Snapshots": dcff217eef506dabd6dfdc7864ea2da321fafbb8
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
-  WJCamera: f05c9e50819f995602c72ab82569de2c40fda3cc
+  WJCamera: aded0ca65bd5ae96abda32f2a4935688f76103e0
 
 PODFILE CHECKSUM: 5c39b6c0aa6dccdc845f576b0ac760ddb9abc66d
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

@@ -10,12 +10,12 @@
 #endif
 #endif
 
-#import "CaptureView.h"
 #import "HAVPlayer.h"
-#import "NSBundle+WJLibrary.h"
+#import "NSBundle+WJ.h"
 #import "UIButton+Enlarge.h"
-#import "UIImage+WJLibrary.h"
+#import "UIImage+WJ.h"
 #import "WJCameraController.h"
+#import "WJCaptureView.h"
 #import "WJProgressView.h"
 #import "WJUtilDefine.h"
 

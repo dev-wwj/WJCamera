@@ -1,12 +1,12 @@
 //
-//  UIImage+WJLibrary.m
+//  UIImage+WJ.m
 //  Expecta
 //
 //  Created by 王文建 on 2013/10/12.
 //
 
-#import "UIImage+WJLibrary.h"
-#import "NSBundle+WJLibrary.h"
+#import "UIImage+WJ.h"
+#import "NSBundle+WJ.h"
 
 @implementation UIImage (WJLibrary)
 

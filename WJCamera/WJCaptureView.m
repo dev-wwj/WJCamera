@@ -1,22 +1,22 @@
 //
-//  CaptureView.m
+//  WJCaptureView.m
 //  WJCamera
 //
 //  Created by wangwenj on 2019/8/14.
 //  Copyright © 2019 wangwenj. All rights reserved.
 //
 
-#import "CaptureView.h"
+#import "WJCaptureView.h"
 
 #define Width_Progress 6
-@interface CaptureView()
+@interface WJCaptureView()
 
 @property (strong, nonatomic) CAShapeLayer *bgLayer;
 @property (strong, nonatomic) CAShapeLayer *ringLayer;
 @property (strong, nonatomic) CAShapeLayer *centerLayer;
 @end
 
-@implementation CaptureView
+@implementation WJCaptureView
 
 
 - (instancetype)init{

@@ -7,14 +7,14 @@
 //
 
 #import "WJCameraController.h"
-#import "CaptureView.h"
+#import "WJCaptureView.h"
 #import "WJUtilDefine.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <Photos/Photos.h>
 #import "HAVPlayer.h"
-#import "UIImage+WJLibrary.h"
+#import "UIImage+WJ.h"
 
 
 typedef void(^PropertyChangeBlock)(AVCaptureDevice *captureDevice);
@@ -38,7 +38,7 @@ API_AVAILABLE(ios(10.0))
 @property (strong,nonatomic) UITapGestureRecognizer *recognizerFocusing;
 
 @property (strong, nonatomic) UIView *safeArea;
-@property(strong, nonatomic)  CaptureView *captureView;  // 拍照按钮
+@property(strong, nonatomic)  WJCaptureView *WJCaptureView;  // 拍照按钮
 
 @property (strong,nonatomic)UIView *previewBg;  // 镜头预览
 @property (assign, nonatomic) BOOL isFocus;
@@ -149,15 +149,15 @@ API_AVAILABLE(ios(10.0))
     
     [self addGenstureRecognizer];
 
-    _captureView = [[CaptureView alloc]init];
-    _captureView.progressColor = _progressColor ?: UIColor.brownColor;
-    _captureView.translatesAutoresizingMaskIntoConstraints = NO;
-    [_safeArea addSubview:_captureView];
-    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_captureView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_safeArea attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
-    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[view(88)]" options:kNilOptions metrics:nil views:@{@"view":_captureView}]];
-    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[view(88)]-10-|" options:kNilOptions metrics:nil views:@{@"view":_captureView}]];
+    _WJCaptureView = [[WJCaptureView alloc]init];
+    _WJCaptureView.progressColor = _progressColor ?: UIColor.brownColor;
+    _WJCaptureView.translatesAutoresizingMaskIntoConstraints = NO;
+    [_safeArea addSubview:_WJCaptureView];
+    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_WJCaptureView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_safeArea attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[view(88)]" options:kNilOptions metrics:nil views:@{@"view":_WJCaptureView}]];
+    [_safeArea addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[view(88)]-10-|" options:kNilOptions metrics:nil views:@{@"view":_WJCaptureView}]];
     WS(weakSelf);
-    _captureView.block = ^(CaptureAction action) {
+    _WJCaptureView.block = ^(CaptureAction action) {
         switch (action) {
             case Tap:
                 //拍照
@@ -191,25 +191,25 @@ API_AVAILABLE(ios(10.0))
     [_btnBack setImage:[UIImage wj_bundleImageNamed:@"wjc_back"] forState:UIControlStateNormal];
     [_btnBack addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     [_safeArea addSubview:_btnBack];
-    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnBack attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnBack attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_WJCaptureView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnBack attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_safeArea attribute:NSLayoutAttributeCenterX multiplier:0.5 constant:0.0]];
     [_btnBack setEnlargeEdge:44];
     
     _btnCancle = [UIButton buttonWithType:UIButtonTypeCustom];
     [_btnCancle setImage:[UIImage wj_bundleImageNamed:@"take_cancle"] forState:UIControlStateNormal];
     [_btnCancle addTarget:self action:@selector(rephotography:) forControlEvents:UIControlEventTouchUpInside];
-    [_safeArea insertSubview:_btnCancle  belowSubview:_captureView];
+    [_safeArea insertSubview:_btnCancle  belowSubview:_WJCaptureView];
     _btnCancle.alpha = 0.0;
     _btnCancle.translatesAutoresizingMaskIntoConstraints = NO;
-    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnCancle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnCancle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_WJCaptureView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     
     _btnConfirm = [UIButton buttonWithType:UIButtonTypeCustom];
     [_btnConfirm setImage:[UIImage wj_bundleImageNamed:@"take_confirm"] forState:UIControlStateNormal];
     [_btnConfirm addTarget:self action:@selector(confirm:) forControlEvents:UIControlEventTouchUpInside];
-    [_safeArea insertSubview:_btnConfirm belowSubview:_captureView];
+    [_safeArea insertSubview:_btnConfirm belowSubview:_WJCaptureView];
     _btnConfirm.alpha = 0.0;
     _btnConfirm.translatesAutoresizingMaskIntoConstraints = NO;
-    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnConfirm attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+    [_safeArea addConstraint:[NSLayoutConstraint constraintWithItem:_btnConfirm attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_WJCaptureView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     [self updateSafeAreaConstraintsWithComplete:NO];
 }
 
@@ -223,11 +223,11 @@ API_AVAILABLE(ios(10.0))
         _cancleCenterYCanstration = nil;
     }
     if (!complate) {
-        _cancleCenterYCanstration = [NSLayoutConstraint constraintWithItem:_btnCancle attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-        _confirmCenterYConstration = [NSLayoutConstraint constraintWithItem:_btnConfirm attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+        _cancleCenterYCanstration = [NSLayoutConstraint constraintWithItem:_btnCancle attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_WJCaptureView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+        _confirmCenterYConstration = [NSLayoutConstraint constraintWithItem:_btnConfirm attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_WJCaptureView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
     }else {
-        _cancleCenterYCanstration = [NSLayoutConstraint constraintWithItem:_btnCancle attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterX multiplier:0.5 constant:0.0];
-        _confirmCenterYConstration = [NSLayoutConstraint constraintWithItem:_btnConfirm attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_captureView attribute:NSLayoutAttributeCenterX multiplier:1.5 constant:0.0];
+        _cancleCenterYCanstration = [NSLayoutConstraint constraintWithItem:_btnCancle attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_WJCaptureView attribute:NSLayoutAttributeCenterX multiplier:0.5 constant:0.0];
+        _confirmCenterYConstration = [NSLayoutConstraint constraintWithItem:_btnConfirm attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_WJCaptureView attribute:NSLayoutAttributeCenterX multiplier:1.5 constant:0.0];
     }
     [_safeArea addConstraints:@[_cancleCenterYCanstration,_confirmCenterYConstration]];
     [_safeArea updateConstraintsIfNeeded];
@@ -384,10 +384,10 @@ API_AVAILABLE(ios(10.0))
     
     [self updateSafeAreaConstraintsWithComplete:NO];
     [UIView animateWithDuration:0.25 animations:^{
-        self->_captureView.alpha = 1.0;
+        self->_WJCaptureView.alpha = 1.0;
         self->_btnConfirm.alpha = 0.0;
         self->_btnCancle.alpha = 0.0;
-        self->_captureView.progress = 0.0;
+        self->_WJCaptureView.progress = 0.0;
         [self->_safeArea layoutIfNeeded];
     } completion:^(BOOL finished) {
     }];
@@ -400,12 +400,12 @@ API_AVAILABLE(ios(10.0))
     _recognizerFocusing.enabled = NO;
     [self updateSafeAreaConstraintsWithComplete:YES];
     [UIView animateWithDuration:0.25 animations:^{
-        self->_captureView.alpha = 0.0;
+        self->_WJCaptureView.alpha = 0.0;
         self->_btnConfirm.alpha = 1.0;
         self->_btnCancle.alpha = 1.0;
         [self->_safeArea layoutIfNeeded];
     } completion:^(BOOL finished) {
-        self->_captureView.progress = 0.0;
+        self->_WJCaptureView.progress = 0.0;
     }];
 }
 
@@ -639,7 +639,7 @@ API_AVAILABLE(ios(10.0))
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if (_captureView.superview &&[touch.view isDescendantOfView:_captureView] ) {
+    if (_WJCaptureView.superview &&[touch.view isDescendantOfView:_WJCaptureView] ) {
         return NO;
     }
     return YES;
@@ -697,7 +697,7 @@ API_AVAILABLE(ios(10.0))
     if (_maxDuration <= duration) {
         [self endRecode];
     }else {
-        _captureView.progress = duration/_maxDuration;
+        _WJCaptureView.progress = duration/_maxDuration;
     }
 }
 

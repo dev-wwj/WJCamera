@@ -1,5 +1,5 @@
 //
-//  UIImage+WJLibrary.h
+//  UIImage+WJ.h
 //  Expecta
 //
 //  Created by 王文建 on 2019/9/1.

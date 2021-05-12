@@ -1,5 +1,5 @@
 //
-//  CaptureView.h
+//  WJCaptureView.h
 //  WJCamera
 //
 //  Created by wangwenj on 2019/8/14.
@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger,CaptureAction) {
 
 typedef void(^CaptureBlock)(CaptureAction action);
 
-@interface CaptureView : UIControl
+@interface WJCaptureView : UIControl
 
 @property(assign, nonatomic) CGFloat progress;
 
