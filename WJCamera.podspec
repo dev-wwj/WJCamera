@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WJCamera'
-  s.version          = '1.0.1'
+  s.version          = '1.2.0'
   s.summary          = 'A camera can click to take a picture and long press to record'
 
 # This description is used to generate tags and improve search results.

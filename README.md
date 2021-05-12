@@ -33,7 +33,6 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod 'WJCamera'
 ```
-
 ## Author
 
 scorpion, 747833020@qq.com
